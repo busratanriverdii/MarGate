@@ -1,0 +1,6 @@
+@MarGate.Basket.Api_HostAddress = http://localhost:5168
+
+GET {{MarGate.Basket.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
