@@ -47,13 +47,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{B27B227E-58DB-43BF-A54E-69F6F383030C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarGate.Payment.Application", "src\Services\Payment\Core\MarGate.Payment.Application\MarGate.Payment.Application.csproj", "{96F13F8C-1A3F-49A7-82C1-8A8FE3B2F5ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarGate.Payment.Application", "src\Services\Payment\Core\MarGate.Payment.Application\MarGate.Payment.Application.csproj", "{96F13F8C-1A3F-49A7-82C1-8A8FE3B2F5ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarGate.Payment.Domain", "src\Services\Payment\Core\MarGate.Payment.Domain\MarGate.Payment.Domain.csproj", "{ECE57265-9D48-4101-8C30-D9A26BDC3F33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarGate.Payment.Domain", "src\Services\Payment\Core\MarGate.Payment.Domain\MarGate.Payment.Domain.csproj", "{ECE57265-9D48-4101-8C30-D9A26BDC3F33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarGate.Payment.Persistence", "src\Services\Payment\Infrastructure\MarGate.Payment.Persistence\MarGate.Payment.Persistence.csproj", "{A1DD6569-B251-4A1B-B2D3-952A0232DFDB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarGate.Payment.Persistence", "src\Services\Payment\Infrastructure\MarGate.Payment.Persistence\MarGate.Payment.Persistence.csproj", "{A1DD6569-B251-4A1B-B2D3-952A0232DFDB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarGate.Payment.Api", "src\Services\Payment\Presentation\MarGate.Payment.Api\MarGate.Payment.Api.csproj", "{80085833-0D44-460E-A2B1-4A43C089B695}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarGate.Payment.Api", "src\Services\Payment\Presentation\MarGate.Payment.Api\MarGate.Payment.Api.csproj", "{80085833-0D44-460E-A2B1-4A43C089B695}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Basket", "Basket", "{B1131E05-F9F2-409A-AEE7-9BC3D01D24B8}"
 EndProject
@@ -65,13 +65,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{A70D81CC-A60E-44FE-A887-E226B81FC83C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarGate.Basket.Application", "src\Services\Basket\Core\MarGate.Basket.Application\MarGate.Basket.Application.csproj", "{0F71D218-88CF-484F-91FA-B6FAF3B126E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarGate.Basket.Application", "src\Services\Basket\Core\MarGate.Basket.Application\MarGate.Basket.Application.csproj", "{0F71D218-88CF-484F-91FA-B6FAF3B126E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarGate.Basket.Domain", "src\Services\Basket\Core\MarGate.Basket.Domain\MarGate.Basket.Domain.csproj", "{8EA1553E-C6D6-45DD-87E0-BFF9B9D49898}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarGate.Basket.Domain", "src\Services\Basket\Core\MarGate.Basket.Domain\MarGate.Basket.Domain.csproj", "{8EA1553E-C6D6-45DD-87E0-BFF9B9D49898}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarGate.Basket.Persistence", "src\Services\Basket\Infrastructure\MarGate.Basket.Persistence\MarGate.Basket.Persistence.csproj", "{01A28954-A089-4658-8D2F-1BD0B10DE369}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarGate.Basket.Persistence", "src\Services\Basket\Infrastructure\MarGate.Basket.Persistence\MarGate.Basket.Persistence.csproj", "{01A28954-A089-4658-8D2F-1BD0B10DE369}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarGate.Basket.Api", "src\Services\Basket\Presentation\MarGate.Basket.Api\MarGate.Basket.Api.csproj", "{63C03E4A-9B6C-42D3-835F-B4A639A1B8E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarGate.Basket.Api", "src\Services\Basket\Presentation\MarGate.Basket.Api\MarGate.Basket.Api.csproj", "{63C03E4A-9B6C-42D3-835F-B4A639A1B8E9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Catalog", "Catalog", "{B6F633F4-4133-4359-A783-4960F83F96FD}"
 EndProject
@@ -83,13 +83,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{4BF2C2C8-7
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{957FCF70-A918-43DA-8EED-E2A2F1795C34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarGate.Catalog.Application", "src\Services\Catalog\Core\MarGate.Catalog.Application\MarGate.Catalog.Application.csproj", "{2500CFAB-3D1A-4D52-B6D1-19CEEE5B5545}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarGate.Catalog.Application", "src\Services\Catalog\Core\MarGate.Catalog.Application\MarGate.Catalog.Application.csproj", "{2500CFAB-3D1A-4D52-B6D1-19CEEE5B5545}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarGate.Catalog.Api", "src\Services\Catalog\Presentation\MarGate.Catalog.Api\MarGate.Catalog.Api.csproj", "{7ABBCE50-A000-48A6-A6B6-D04319E52673}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarGate.Catalog.Api", "src\Services\Catalog\Presentation\MarGate.Catalog.Api\MarGate.Catalog.Api.csproj", "{7ABBCE50-A000-48A6-A6B6-D04319E52673}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarGate.Catalog.Domain", "src\Services\Catalog\Core\MarGate.Catalog.Domain\MarGate.Catalog.Domain.csproj", "{6C454CEE-8902-447C-A795-6022F4479FA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarGate.Catalog.Domain", "src\Services\Catalog\Core\MarGate.Catalog.Domain\MarGate.Catalog.Domain.csproj", "{6C454CEE-8902-447C-A795-6022F4479FA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarGate.Catalog.Persistence", "src\Services\Catalog\Infrastructure\MarGate.Catalog.Persistence\MarGate.Catalog.Persistence.csproj", "{5CC258FC-72D6-4D9D-A8D6-9BD4BFE1CD99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarGate.Catalog.Persistence", "src\Services\Catalog\Infrastructure\MarGate.Catalog.Persistence\MarGate.Catalog.Persistence.csproj", "{5CC258FC-72D6-4D9D-A8D6-9BD4BFE1CD99}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{737C20C1-177E-4AE9-A7FC-5721D86AD1C6}"
 EndProject
@@ -101,13 +101,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{FB770803-E0E6-420F-9BD7-6AF6627D64E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarGate.Identity.Application", "src\Services\Identity\Core\MarGate.Identity.Application\MarGate.Identity.Application.csproj", "{1E52B9F5-7488-48D1-910C-9AD60C0B262A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarGate.Identity.Application", "src\Services\Identity\Core\MarGate.Identity.Application\MarGate.Identity.Application.csproj", "{1E52B9F5-7488-48D1-910C-9AD60C0B262A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarGate.Identity.Domain", "src\Services\Identity\Core\MarGate.Identity.Domain\MarGate.Identity.Domain.csproj", "{20FA202B-7B73-4F25-A4C6-40D275B7A765}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarGate.Identity.Domain", "src\Services\Identity\Core\MarGate.Identity.Domain\MarGate.Identity.Domain.csproj", "{20FA202B-7B73-4F25-A4C6-40D275B7A765}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarGate.Identity.Persistence", "src\Services\Identity\Infrastructure\MarGate.Identity.Persistence\MarGate.Identity.Persistence.csproj", "{CB5AE267-A48D-431B-97E5-F1EDC92754E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarGate.Identity.Persistence", "src\Services\Identity\Infrastructure\MarGate.Identity.Persistence\MarGate.Identity.Persistence.csproj", "{CB5AE267-A48D-431B-97E5-F1EDC92754E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarGate.Identity.Api", "src\Services\Identity\Presentation\MarGate.Identity.Api\MarGate.Identity.Api.csproj", "{D1BF02A7-0B07-47EC-9EC7-6B6050ED0C6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarGate.Identity.Api", "src\Services\Identity\Presentation\MarGate.Identity.Api\MarGate.Identity.Api.csproj", "{D1BF02A7-0B07-47EC-9EC7-6B6050ED0C6A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{3072B5C9-5F5E-4B89-82E2-44C3B92574D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarGate.Core.Common", "src\Core\Common\MarGate.Core.Common\MarGate.Core.Common.csproj", "{403523F3-EC9C-433C-9FB1-FB8AE41F39B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -203,6 +207,10 @@ Global
 		{D1BF02A7-0B07-47EC-9EC7-6B6050ED0C6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1BF02A7-0B07-47EC-9EC7-6B6050ED0C6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1BF02A7-0B07-47EC-9EC7-6B6050ED0C6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{403523F3-EC9C-433C-9FB1-FB8AE41F39B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{403523F3-EC9C-433C-9FB1-FB8AE41F39B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{403523F3-EC9C-433C-9FB1-FB8AE41F39B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{403523F3-EC9C-433C-9FB1-FB8AE41F39B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -260,6 +268,8 @@ Global
 		{20FA202B-7B73-4F25-A4C6-40D275B7A765} = {FF4165C0-8BE1-414F-AB3F-3E349B7FBA92}
 		{CB5AE267-A48D-431B-97E5-F1EDC92754E1} = {FB770803-E0E6-420F-9BD7-6AF6627D64E9}
 		{D1BF02A7-0B07-47EC-9EC7-6B6050ED0C6A} = {FC951D73-58E8-4672-B36B-9C790377B62D}
+		{3072B5C9-5F5E-4B89-82E2-44C3B92574D7} = {84694D8B-1A7C-4F2D-BAA4-11FFFBFE8465}
+		{403523F3-EC9C-433C-9FB1-FB8AE41F39B8} = {3072B5C9-5F5E-4B89-82E2-44C3B92574D7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E3B144C6-7706-4531-A9FE-FD1CE2C13A44}
