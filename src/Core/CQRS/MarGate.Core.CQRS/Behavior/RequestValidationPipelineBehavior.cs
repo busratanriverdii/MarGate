@@ -20,8 +20,11 @@ namespace MarGate.Core.CQRS.Behavior
                 .Where(x => x is not null)
                 .ToList();
 
+
             return erros.Any()
-                ? throw new Exception(string.Join(",", erros.Select(x => x.ErrorMessage).Distinct()))
+                ? throw new Common.Exception.ValidationException(
+                    string.Join(",", erros.Select(x => x.ErrorCode).Distinct()),
+                    string.Join(",", erros.Select(x => x.ErrorMessage).Distinct()))
                 : next();
         }
     }
