@@ -30,6 +30,7 @@ namespace MarGate.Core.CQRS.Extension
                 .AsImplementedInterfaces()
                 .WithScopedLifetime());
 
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestLoggingPipelineBehavior<,>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestValidationPipelineBehavior<,>));
 
             return services;
