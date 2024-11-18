@@ -14,17 +14,17 @@ namespace MarGate.Core.CQRS.Behavior
 
         public Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
-            var erros = _validators
+            var errors = _validators
                 .Select(x => x.Validate(request))
                 .SelectMany(x => x.Errors)
                 .Where(x => x is not null)
                 .ToList();
 
 
-            return erros.Any()
+            return errors.Any()
                 ? throw new Common.Exception.ValidationException(
-                    string.Join(",", erros.Select(x => x.ErrorCode).Distinct()),
-                    string.Join(",", erros.Select(x => x.ErrorMessage).Distinct()))
+                    string.Join(",", errors.Select(x => x.ErrorCode).Distinct()),
+                    string.Join(",", errors.Select(x => x.ErrorMessage).Distinct()))
                 : next();
         }
     }
