@@ -111,11 +111,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarGate.Identity.Api", "src
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{3072B5C9-5F5E-4B89-82E2-44C3B92574D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarGate.Core.Common", "src\Core\Common\MarGate.Core.Common\MarGate.Core.Common.csproj", "{403523F3-EC9C-433C-9FB1-FB8AE41F39B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarGate.Core.Common", "src\Core\Common\MarGate.Core.Common\MarGate.Core.Common.csproj", "{403523F3-EC9C-433C-9FB1-FB8AE41F39B8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logging", "Logging", "{BB2A7DF0-7422-4CE8-B9AB-8D86909B3842}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarGate.Core.Logging", "src\Core\Logging\MarGate.Core.Logging\MarGate.Core.Logging.csproj", "{3172FFC1-3167-47C0-8D35-858CF011B03E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarGate.Core.Logging", "src\Core\Logging\MarGate.Core.Logging\MarGate.Core.Logging.csproj", "{3172FFC1-3167-47C0-8D35-858CF011B03E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Persistence", "Persistence", "{5C20A8CA-9910-4E30-9C4F-0135451918E2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarGate.Core.Persistence", "MarGate.Core.Persistence\MarGate.Core.Persistence.csproj", "{2C53BC82-9574-4B1E-B467-E6875054C9A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -219,6 +223,10 @@ Global
 		{3172FFC1-3167-47C0-8D35-858CF011B03E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3172FFC1-3167-47C0-8D35-858CF011B03E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3172FFC1-3167-47C0-8D35-858CF011B03E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C53BC82-9574-4B1E-B467-E6875054C9A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C53BC82-9574-4B1E-B467-E6875054C9A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C53BC82-9574-4B1E-B467-E6875054C9A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C53BC82-9574-4B1E-B467-E6875054C9A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -280,6 +288,8 @@ Global
 		{403523F3-EC9C-433C-9FB1-FB8AE41F39B8} = {3072B5C9-5F5E-4B89-82E2-44C3B92574D7}
 		{BB2A7DF0-7422-4CE8-B9AB-8D86909B3842} = {84694D8B-1A7C-4F2D-BAA4-11FFFBFE8465}
 		{3172FFC1-3167-47C0-8D35-858CF011B03E} = {BB2A7DF0-7422-4CE8-B9AB-8D86909B3842}
+		{5C20A8CA-9910-4E30-9C4F-0135451918E2} = {84694D8B-1A7C-4F2D-BAA4-11FFFBFE8465}
+		{2C53BC82-9574-4B1E-B467-E6875054C9A6} = {5C20A8CA-9910-4E30-9C4F-0135451918E2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E3B144C6-7706-4531-A9FE-FD1CE2C13A44}

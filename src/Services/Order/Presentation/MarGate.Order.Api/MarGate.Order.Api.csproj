@@ -10,4 +10,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\MarGate.Core.Persistence\MarGate.Core.Persistence.csproj" />
+  </ItemGroup>
+
 </Project>
