@@ -1,20 +1,23 @@
-﻿namespace MarGate.Core.Cache.Memory;
+﻿using Microsoft.Extensions.Caching.Memory;
 
-public class MemoryCacheService(IMemoryCacheService memoryCacheService) : IMemoryCacheService
+namespace MarGate.Core.Cache.Memory;
+
+public class MemoryCacheService(IMemoryCache memoryCache) : IMemoryCacheService
 {
     public Task<T> GetAsync<T>(string key)
     {
-        return memoryCacheService.GetAsync<T>(key);
+        return Task.FromResult(memoryCache.Get<T>(key));
     }
 
     public Task SetAsync<T>(string key, T value, TimeSpan expiration)
     {
-        return memoryCacheService.SetAsync(key, value, expiration);
+        return Task.FromResult(memoryCache.Set(key, value, expiration));
     }
 
     public Task RemoveAsync(string key)
     {
-        return memoryCacheService.RemoveAsync(key);
+        memoryCache.Remove(key);
+        return Task.CompletedTask;
     }
 }
 
