@@ -2,7 +2,6 @@
 using MarGate.Core.Cache.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using StackExchange.Redis;
 
 namespace MarGate.Core.Cache.Extension
 {
@@ -10,9 +9,21 @@ namespace MarGate.Core.Cache.Extension
     {
         public static IServiceCollection AddCache(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(configuration.GetConnectionString("Redis")));
-            services.AddSingleton<IDistributedCacheService, DistributedCacheService>();
+            AddDistributedCache(services, configuration);
+            AddMemoryCache(services);
 
+            return services;
+        }
+
+        public static IServiceCollection AddDistributedCache(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddSingleton<IDistributedCacheService, RedisCacheService>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddMemoryCache(this IServiceCollection services)
+        {
             services.AddMemoryCache();
             services.AddSingleton<IMemoryCacheService, MemoryCacheService>();
 
