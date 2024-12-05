@@ -1,11 +1,12 @@
-﻿using StackExchange.Redis;
+﻿using Microsoft.Extensions.Configuration;
+using StackExchange.Redis;
 using System.Text.Json;
 
 namespace MarGate.Core.Cache.Distributed;
 
-public class DistributedCacheService(IConnectionMultiplexer redis) : IDistributedCacheService
+public class RedisCacheService(IConfiguration configuration) : IDistributedCacheService
 {
-    private readonly IDatabase _database = redis.GetDatabase();
+    private readonly IDatabase _database = ConnectionMultiplexer.Connect(configuration.GetConnectionString("Redis")).GetDatabase();
 
     public async Task<T> GetAsync<T>(string key)
     {
