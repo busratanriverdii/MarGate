@@ -2,7 +2,7 @@
 
 namespace MarGate.Core.MessageBus.Publisher;
 
-internal class MessagePublisher(IPublishEndpoint publishEndpoint) : IMessagePublisher
+public class MessagePublisher(IPublishEndpoint publishEndpoint) : IMessagePublisher
 {
     private readonly IPublishEndpoint _publishEndpoint = publishEndpoint;
 
