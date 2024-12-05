@@ -6,7 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 namespace MarGate.Core.MessageBus.Extension;
 public static class ServiceCollectionExtensions
 {
-
     public class MessageBusSettings
     {
         public string Host { get; set; }
