@@ -19,7 +19,7 @@ namespace MarGate.Core.CQRS.Behavior
 
             var response = await next();
 
-            _logger.LogInformation($"Response {typeof(TRequest).Name} : {JsonSerializer.Serialize(response)}");
+            _logger.LogInformation($"Response {typeof(TResponse).Name} : {JsonSerializer.Serialize(response)}");
 
             return response;
         }
