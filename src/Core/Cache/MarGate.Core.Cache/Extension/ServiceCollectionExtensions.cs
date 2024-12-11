@@ -7,14 +7,6 @@ namespace MarGate.Core.Cache.Extension
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddCache(this IServiceCollection services, IConfiguration configuration)
-        {
-            AddDistributedCache(services, configuration);
-            AddMemoryCache(services);
-
-            return services;
-        }
-
         public static IServiceCollection AddDistributedCache(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddSingleton<IDistributedCacheService, RedisCacheService>();
