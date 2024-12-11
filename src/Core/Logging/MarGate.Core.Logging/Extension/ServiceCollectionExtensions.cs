@@ -1,41 +1,75 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+﻿using Elastic.Serilog.Sinks;
+using Elastic.Transport;
+using MarGate.Core.Logging.Configuration;
+using MarGate.Core.Logging.LogTargets;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Serilog;
-using System.ComponentModel;
 
 namespace MarGate.Core.Logging.Extension;
+
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddLog(this IServiceCollection services, LoggingOptions options, IHostBuilder hostBuilder)
+    public static IServiceCollection AddLog(this IServiceCollection services, ILoggingBuilder loggingBuilder, LoggingOptions options)
     {
-        var loggerConfiguration = new LoggerConfiguration().MinimumLevel.Information();
-        SetWriteToConfiguration(loggerConfiguration, options.WriteToType);
-        Log.Logger = loggerConfiguration.CreateLogger();
+        loggingBuilder.ClearProviders();
 
-        hostBuilder.UseSerilog(Log.Logger);
+        Log.Logger = ConfigureLoggerConfiguration(options.LogTargetSettings)
+            .CreateLogger();
 
         return services;
     }
 
-    private static void SetWriteToConfiguration(LoggerConfiguration loggerConfiguration, WriteToType writeToType)
+    private static LoggerConfiguration ConfigureLoggerConfiguration(ILogTargetSettings logTargetSettings)
     {
-        switch (writeToType)
+        var loggerConfiguration = new LoggerConfiguration();
+
+        switch (logTargetSettings)
         {
-            case WriteToType.Console:
-                loggerConfiguration.WriteTo.Console();
+            case ConsoleLogSettings consoleLogSettings:
+                WriteToConsole(loggerConfiguration, consoleLogSettings);
+                break;
+
+            case FileLogSettings fileSettings when !string.IsNullOrEmpty(fileSettings.FilePath):
+                WriteToFile(loggerConfiguration, fileSettings);
+                break;
+
+            case ElasticsearchLogSettings elasticSearchSettings when !string.IsNullOrEmpty(elasticSearchSettings.ElasticsearchUrl):
+                WriteToElastic(loggerConfiguration, elasticSearchSettings);
                 break;
             default:
-                throw new InvalidEnumArgumentException(nameof(WriteToType));
+                throw new InvalidOperationException($"{logTargetSettings.GetType().Name}");
         }
+
+        return loggerConfiguration;
     }
-}
 
-public class LoggingOptions
-{
-    public WriteToType WriteToType { get; set; }
-}
+    private static void WriteToConsole(LoggerConfiguration loggerConfiguration, ConsoleLogSettings consoleLogSettings)
+    {
+        loggerConfiguration.WriteTo.Console(
+            consoleLogSettings.LogFormatter,
+            consoleLogSettings.LogLevel);
+    }
 
-public enum WriteToType
-{
-    Console,
+    private static void WriteToFile(LoggerConfiguration loggerConfiguration, FileLogSettings fileSettings)
+    {
+        loggerConfiguration.WriteTo.File(
+            fileSettings.FilePath,
+            restrictedToMinimumLevel: fileSettings.LogLevel,
+            fileSizeLimitBytes: fileSettings.MaxFileSizeBytes,
+            rollOnFileSizeLimit: fileSettings.RollOnFileSizeLimit);
+    }
+
+    private static void WriteToElastic(LoggerConfiguration loggerConfiguration, ElasticsearchLogSettings elasticSearchSettings)
+    {
+        loggerConfiguration.WriteTo.Elasticsearch([new Uri(elasticSearchSettings.ElasticsearchUrl)], configureOptions: x =>
+        {
+            x.DataStream = new Elastic.Ingest.Elasticsearch.DataStreams.DataStreamName(elasticSearchSettings.IndexName);
+            x.BootstrapMethod = Elastic.Ingest.Elasticsearch.BootstrapMethod.Failure;
+        },
+        restrictedToMinimumLevel: elasticSearchSettings.LogLevel, configureTransport: x =>
+        {
+            x.Authentication(new BasicAuthentication(elasticSearchSettings.UserName, elasticSearchSettings.Password));
+        });
+    }
 }
