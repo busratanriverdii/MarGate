@@ -3,7 +3,12 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Catalog\Core\MarGate.Catalog.Domain\MarGate.Catalog.Domain.csproj" />
+    <ProjectReference Include="..\..\..\Identity\Core\MarGate.Identity.Domain\MarGate.Identity.Domain.csproj" />
+  </ItemGroup>
 
 </Project>
