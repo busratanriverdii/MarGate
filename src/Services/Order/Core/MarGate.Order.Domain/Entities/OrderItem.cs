@@ -1,4 +1,6 @@
-﻿namespace MarGate.Order.Domain.Entities;
+﻿using MarGate.Core.DDD;
+
+namespace MarGate.Order.Domain.Entities;
 
 public class OrderItem : BaseEntity
 {

@@ -6,4 +6,8 @@
     <Nullable>disable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Core\DDD\MarGate.Core.DDD\MarGate.Core.DDD.csproj" />
+  </ItemGroup>
+
 </Project>

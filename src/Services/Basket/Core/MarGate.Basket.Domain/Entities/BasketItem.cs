@@ -1,4 +1,6 @@
-﻿namespace MarGate.Basket.Domain.Entities;
+﻿using MarGate.Core.DDD;
+
+namespace MarGate.Basket.Domain.Entities;
 
 public class BasketItem : BaseEntity
 {

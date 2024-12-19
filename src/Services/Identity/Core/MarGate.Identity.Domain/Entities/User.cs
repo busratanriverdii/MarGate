@@ -1,4 +1,6 @@
-﻿namespace MarGate.Identity.Domain.Entities;
+﻿using MarGate.Core.DDD;
+
+namespace MarGate.Identity.Domain.Entities;
 public class User : BaseEntity
 {
     public string FirstName { get; protected set; }
@@ -32,19 +34,19 @@ public class User : BaseEntity
 
     public void SetPhoneNumber(PhoneNumber phoneNumber)
     {
-        PhoneNumber = phoneNumber ?? 
+        PhoneNumber = phoneNumber ??
             throw new ArgumentException($"Phone number cannot be null.");
     }
 
     public void SetAddress(Address address)
     {
-        Address = address ?? 
+        Address = address ??
             throw new ArgumentException($"Address cannot be null.");
     }
 
     public void SetEmailAddress(EmailAddress emailAddress)
     {
-        EmailAddress = emailAddress ?? 
+        EmailAddress = emailAddress ??
             throw new ArgumentException($"Email address cannot be null.");
     }
 
@@ -72,28 +74,6 @@ public class User : BaseEntity
 
         Balance += amount;
     }
-
-    //public void MarkAsDeleted()
-    //{
-    //    if (IsDeleted)
-    //    {
-    //        throw new InvalidOperationException($"User has already been deleted. Cannot delete again. (ID: {Id})");
-    //    }
-
-    //    IsDeleted = true;
-    //    MarkAsModified();
-    //}
-
-    //public void Restore()
-    //{
-    //    if (!IsDeleted)
-    //    {
-    //        throw new InvalidOperationException($"This user has not been deleted. Cannot restore. (ID: {Id})");
-    //    }
-
-    //    IsDeleted = false;
-    //    MarkAsModified();
-    //}
 }
 
 public class PhoneNumber
@@ -142,58 +122,5 @@ public class Address
         Street = street;
         City = city;
         Country = country;
-    }
-}
-
-
-public class BaseEntity
-{
-    public long Id { get; protected set; }
-    public DateTime CreatedDate { get; } = DateTime.Now;
-
-    private DateTime _modifiedDate;
-    public DateTime ModifiedDate
-    {
-        get => _modifiedDate;
-        private set => _modifiedDate = value;
-    }
-
-    public bool IsDeleted { get; protected set; } = false;
-
-    //public BaseEntity(long id)
-    //{
-    //    if (id <= 0)
-    //    {
-    //        throw new ArgumentException($"Id must be a positive value. Attempted to set Id to: {id}.");
-    //    }
-
-    //    Id = id;
-    //}
-
-    public void MarkAsModified()
-    {
-        ModifiedDate = DateTime.Now;
-    }
-
-    public void MarkAsDeleted()
-    {
-        if (IsDeleted)
-        {
-            throw new InvalidOperationException($"This entity has already been deleted. Cannot delete again. (ID: {Id})");
-        }
-
-        IsDeleted = true;
-        MarkAsModified();
-    }
-
-    public void Restore()
-    {
-        if (!IsDeleted)
-        {
-            throw new InvalidOperationException($"This entity is not deleted. Cannot restore. (ID: {Id})");
-        }
-
-        IsDeleted = false;
-        MarkAsModified();
     }
 }

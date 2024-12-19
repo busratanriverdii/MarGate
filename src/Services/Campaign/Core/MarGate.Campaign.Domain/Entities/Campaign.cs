@@ -1,6 +1,8 @@
-﻿namespace MarGate.Campaign.Domain.Entities;
+﻿using MarGate.Core.DDD;
 
-public class Campaign
+namespace MarGate.Campaign.Domain.Entities;
+
+public class Campaign : BaseEntity
 {
     public string Name { get; protected set; }
     public string Description { get; protected set; }
