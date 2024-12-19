@@ -1,4 +1,5 @@
-﻿using MarGate.Identity.Domain.Entities;
+﻿using MarGate.Core.DDD;
+using MarGate.Identity.Domain.Entities;
 
 namespace MarGate.Order.Domain.Entities;
 
@@ -79,59 +80,5 @@ public class Order : BaseEntity
         {
             return HashCode.Combine(Street, City, State, PostalCode, Country);
         }
-    }
-
-
-}
-
-public class BaseEntity
-{
-    public long Id { get; protected set; }
-    public DateTime CreatedDate { get; } = DateTime.Now;
-
-    private DateTime _modifiedDate;
-    public DateTime ModifiedDate
-    {
-        get => _modifiedDate;
-        private set => _modifiedDate = value;
-    }
-
-    public bool IsDeleted { get; protected set; } = false;
-
-    //public BaseEntity(long id)
-    //{
-    //    if (id <= 0)
-    //    {
-    //        throw new ArgumentException($"Id must be a positive value. Attempted to set Id to: {id}.");
-    //    }
-
-    //    Id = id;
-    //}
-
-    public void MarkAsModified()
-    {
-        ModifiedDate = DateTime.Now;
-    }
-
-    public void MarkAsDeleted()
-    {
-        if (IsDeleted)
-        {
-            throw new InvalidOperationException($"This entity has already been deleted. Cannot delete again. (ID: {Id})");
-        }
-
-        IsDeleted = true;
-        MarkAsModified();
-    }
-
-    public void Restore()
-    {
-        if (!IsDeleted)
-        {
-            throw new InvalidOperationException($"This entity is not deleted. Cannot restore. (ID: {Id})");
-        }
-
-        IsDeleted = false;
-        MarkAsModified();
     }
 }

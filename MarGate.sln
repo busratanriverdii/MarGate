@@ -135,13 +135,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{A859B174-24CB-4C7B-894B-3BF246F83093}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarGate.Campaign.Application", "src\Services\Campaign\Core\MarGate.Campaign.Application\MarGate.Campaign.Application.csproj", "{8139753A-5782-4ACB-AFF8-CF21E91857C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarGate.Campaign.Application", "src\Services\Campaign\Core\MarGate.Campaign.Application\MarGate.Campaign.Application.csproj", "{8139753A-5782-4ACB-AFF8-CF21E91857C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarGate.Campaign.Domain", "src\Services\Campaign\Core\MarGate.Campaign.Domain\MarGate.Campaign.Domain.csproj", "{81F6BB85-343D-4A9E-856C-DFF2771E2709}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarGate.Campaign.Domain", "src\Services\Campaign\Core\MarGate.Campaign.Domain\MarGate.Campaign.Domain.csproj", "{81F6BB85-343D-4A9E-856C-DFF2771E2709}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarGate.Campaign.Persistence", "src\Services\Campaign\Infrastructure\MarGate.Campaign.Persistence\MarGate.Campaign.Persistence.csproj", "{9095AEAA-D71A-4299-AA2D-56497823F0A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarGate.Campaign.Persistence", "src\Services\Campaign\Infrastructure\MarGate.Campaign.Persistence\MarGate.Campaign.Persistence.csproj", "{9095AEAA-D71A-4299-AA2D-56497823F0A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarGate.Campaign.Api", "src\Services\Campaign\Presentation\MarGate.Campaign.Api\MarGate.Campaign.Api.csproj", "{22A15AA1-96F9-417E-91C1-BBCE52C87B6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarGate.Campaign.Api", "src\Services\Campaign\Presentation\MarGate.Campaign.Api\MarGate.Campaign.Api.csproj", "{22A15AA1-96F9-417E-91C1-BBCE52C87B6F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DDD", "DDD", "{E7A261A1-8FEE-43F7-A592-24D5C30A5A68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarGate.Core.DDD", "src\Core\DDD\MarGate.Core.DDD\MarGate.Core.DDD.csproj", "{E0031241-DDA9-4269-AF99-0B6E1D1A3954}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -269,6 +273,10 @@ Global
 		{22A15AA1-96F9-417E-91C1-BBCE52C87B6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22A15AA1-96F9-417E-91C1-BBCE52C87B6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22A15AA1-96F9-417E-91C1-BBCE52C87B6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0031241-DDA9-4269-AF99-0B6E1D1A3954}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0031241-DDA9-4269-AF99-0B6E1D1A3954}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0031241-DDA9-4269-AF99-0B6E1D1A3954}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0031241-DDA9-4269-AF99-0B6E1D1A3954}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -343,6 +351,8 @@ Global
 		{81F6BB85-343D-4A9E-856C-DFF2771E2709} = {C34351EE-7F78-4206-9144-7BFFDAB1803B}
 		{9095AEAA-D71A-4299-AA2D-56497823F0A6} = {D903B9A7-A3DD-43B4-845E-A28E44A5E366}
 		{22A15AA1-96F9-417E-91C1-BBCE52C87B6F} = {58D53BB0-6D83-4780-B8E6-B469D8FA9019}
+		{E7A261A1-8FEE-43F7-A592-24D5C30A5A68} = {84694D8B-1A7C-4F2D-BAA4-11FFFBFE8465}
+		{E0031241-DDA9-4269-AF99-0B6E1D1A3954} = {E7A261A1-8FEE-43F7-A592-24D5C30A5A68}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E3B144C6-7706-4531-A9FE-FD1CE2C13A44}
