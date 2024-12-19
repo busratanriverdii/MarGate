@@ -10,7 +10,7 @@ namespace MarGate.Core.Cache.Extension
         public static IServiceCollection AddRedisCache(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddSingleton<IDistributedCacheService, RedisCacheService>();
-
+            //redis, mcache
             return services;
         }
 
