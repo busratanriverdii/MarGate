@@ -1,0 +1,6 @@
+@MarGate.Campaign.Api_HostAddress = http://localhost:5141
+
+GET {{MarGate.Campaign.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
