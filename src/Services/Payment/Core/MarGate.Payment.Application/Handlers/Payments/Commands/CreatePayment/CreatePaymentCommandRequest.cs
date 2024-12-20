@@ -1,4 +1,5 @@
 ﻿using MarGate.Core.CQRS.Command;
+using MarGate.Payment.Domain.Entities;
 
 namespace MarGate.Payment.Application.Handlers.Payment.Commands.CreatePayment;
 
@@ -12,8 +13,8 @@ public class CreatePaymentCommandRequest : Command<CreatePaymentCommandResponse>
 
 public enum PaymentStatus
 {
-    Pending,      // Ödeme beklemede
-    Completed,    // Ödeme tamamlanmış
-    Failed,       // Ödeme başarısız
-    Cancelled     // Ödeme iptal edilmiş
+    Pending,      
+    Completed,    
+    Failed,       
+    Cancelled     
 }
