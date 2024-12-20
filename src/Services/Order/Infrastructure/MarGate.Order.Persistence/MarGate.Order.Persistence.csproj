@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Configurations\" />
+    <ProjectReference Include="..\..\Core\MarGate.Order.Domain\MarGate.Order.Domain.csproj" />
   </ItemGroup>
 
 </Project>
