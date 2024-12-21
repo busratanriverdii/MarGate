@@ -1,31 +1,27 @@
-﻿using MarGate.Core.CQRS.Command;
+﻿using MarGate.Catalog.Domain.Entities;
+using MarGate.Core.CQRS.Command;
+using MarGate.Core.Persistence.Repository;
+using MarGate.Core.Persistence.UnitOfWork;
 
 namespace MarGate.Catalog.Application.Handlers.Categories.Commands.CreateCategory;
 
-public class CreateCategoryCommandHandler : CommandHandler<CreateCategoryCommandRequest, CreateCategoryCommandResponse>
+public class CreateCategoryCommandHandler(IUnitOfWork unitOfWork) : CommandHandler<CreateCategoryCommandRequest, CreateCategoryCommandResponse>
 {
-    private readonly ICategoryWriteRepository _categoryWriteRepository;
+    private readonly IWriteRepository<Category> _categoryWriteRepository = unitOfWork.GetWriteRepository<Category>();
 
-    public CreateCategoryCommandHandler(ICategoryWriteRepository categoryWriteRepository)
-    {
-        _categoryWriteRepository = categoryWriteRepository;
-    }
-
-    public override Task<CreateCategoryCommandResponse> Handle(CreateCategoryCommandRequest request,
+    public async override Task<CreateCategoryCommandResponse> Handle(CreateCategoryCommandRequest request,
         CancellationToken cancellationToken)
     {
-        var category = new Category()
-        {
-            Name = request.Name,
-            Description = request.Description
-        };
+        var category = new Category(request.Name, request.Description);
 
-        var isSuccess = await _categoryWriteRepository.CreateAsync(category);
-        await _categoryWriteRepository.SaveAsync();
+        var id = _categoryWriteRepository.Create(category);
+
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return new CreateCategoryCommandResponse()
         {
-            IsSuccess = isSuccess
+            IsSuccess = true,
+            Id = id
         };
     }
 }

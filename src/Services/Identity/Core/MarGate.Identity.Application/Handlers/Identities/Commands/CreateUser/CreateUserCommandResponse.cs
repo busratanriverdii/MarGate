@@ -3,4 +3,5 @@
 public class CreateUserCommandResponse
 {
     public bool IsSuccess { get; set; }
+    public long UserId { get; set; }
 }

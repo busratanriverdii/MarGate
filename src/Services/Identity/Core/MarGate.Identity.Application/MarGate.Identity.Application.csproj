@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Core\CQRS\MarGate.Core.CQRS\MarGate.Core.CQRS.csproj" />
+    <ProjectReference Include="..\..\..\..\Core\UnitOfWork\MarGate.Core.UnitOfWork\MarGate.Core.UnitOfWork.csproj" />
+    <ProjectReference Include="..\MarGate.Identity.Domain\MarGate.Identity.Domain.csproj" />
   </ItemGroup>
 
 </Project>

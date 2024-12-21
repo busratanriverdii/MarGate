@@ -14,6 +14,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Core\CQRS\MarGate.Core.CQRS\MarGate.Core.CQRS.csproj" />
+    <ProjectReference Include="..\..\..\..\Core\UnitOfWork\MarGate.Core.UnitOfWork\MarGate.Core.UnitOfWork.csproj" />
+    <ProjectReference Include="..\MarGate.Catalog.Domain\MarGate.Catalog.Domain.csproj" />
   </ItemGroup>
 
 </Project>

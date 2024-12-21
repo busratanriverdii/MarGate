@@ -3,5 +3,5 @@
 public class CreatePaymentCommandResponse
 {
     public bool IsSuccess { get; set; }
-    //id dönmek gerekir mi
+    public long PaymentId { get; set; }
 }

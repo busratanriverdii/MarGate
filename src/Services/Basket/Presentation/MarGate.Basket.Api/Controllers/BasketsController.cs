@@ -1,4 +1,5 @@
-﻿using MarGate.Basket.Application.Handlers.Basket.Commands.CreateBasket;
+﻿using MarGate.Basket.Api.Request.Basket;
+using MarGate.Basket.Application.Handlers.Basket.Commands.CreateBasket;
 using MarGate.Basket.Application.Handlers.Basket.Commands.DeleteBasket;
 using MarGate.Basket.Application.Handlers.Basket.Commands.UpdateBasket;
 using MarGate.Basket.Application.Handlers.Basket.Queries.GetAllBaskets;

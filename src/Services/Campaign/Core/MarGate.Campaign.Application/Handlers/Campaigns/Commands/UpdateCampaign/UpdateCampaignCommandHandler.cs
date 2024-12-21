@@ -1,43 +1,26 @@
 ﻿using MarGate.Core.CQRS.Command;
+using MarGate.Core.Mongo;
 
 namespace MarGate.Campaign.Application.Handlers.Campaigns.Commands.UpdateCampaign;
 
-public class UpdateCampaignCommandHandler : CommandHandler<UpdateCampaignCommandRequest, UpdateCampaignCommandResponse>
+public class UpdateCampaignCommandHandler(IMongoRepositoryFactory mongoRepositoryFactory) : CommandHandler<UpdateCampaignCommandRequest, UpdateCampaignCommandResponse>
 {
-    private readonly ICampaignWriteRepository _campaignWriteRepository;
+    private readonly IMongoRepository<Domain.Entities.Campaign> _campaignRepository = mongoRepositoryFactory.CreateRepository<Domain.Entities.Campaign>();
 
-    public UpdateCampaignCommandHandler(ICampaignWriteRepository campaignWriteRepository)
-    {
-        _campaignWriteRepository = campaignWriteRepository;
-    }
-
-    public override Task<UpdateCampaignCommandResponse> Handle(UpdateCampaignCommandRequest request,
+    public async override Task<UpdateCampaignCommandResponse> Handle(UpdateCampaignCommandRequest request,
         CancellationToken cancellationToken)
     {
-        var campaign = await _campaignWriteRepository.FindAsync(request.CampaignId);
-        if (campaign == null)
-        {
-            return new UpdateCampaignCommandResponse
-            {
-                IsSuccess = false
-            };
-        }
+        var campaign = await _campaignRepository.FirstOrDefaultAsync(x => x.Id == request.Id);
+        campaign.SetName(request.Name);
+        campaign.SetDescription(request.Description);
+        campaign.SetDiscountRate(request.DiscountPercentage);
+        campaign.SetCampaignIntervalDate(request.StartDate, request.EndDate);
 
-        campaign.UpdateDetails(
-            request.Name,
-            request.Description,
-            new Discount(request.DiscountPercentage),
-            request.StartDate,
-            request.EndDate,
-            request.IsActive
-        );
-        var isSuccess = _campaignWriteRepository.Update(campaign);
-
-        await _campaignWriteRepository.SaveAsync();
+        await _campaignRepository.UpdateAsync(campaign, cancellationToken);
 
         return new UpdateCampaignCommandResponse
         {
-            IsSuccess = isSuccess
+            IsSuccess = true
         };
     }
 }

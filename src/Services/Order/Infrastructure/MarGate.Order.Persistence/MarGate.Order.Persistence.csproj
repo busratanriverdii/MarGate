@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Core\UnitOfWork\MarGate.Core.UnitOfWork\MarGate.Core.UnitOfWork.csproj" />
     <ProjectReference Include="..\..\Core\MarGate.Order.Domain\MarGate.Order.Domain.csproj" />
   </ItemGroup>
 

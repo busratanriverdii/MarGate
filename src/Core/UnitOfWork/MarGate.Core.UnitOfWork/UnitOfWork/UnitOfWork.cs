@@ -1,31 +1,28 @@
-﻿using MarGate.Core.Persistence.Context;
+﻿using MarGate.Core.DDD;
+using MarGate.Core.Persistence.Context;
 using MarGate.Core.Persistence.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System.Collections.Concurrent;
 
 namespace MarGate.Core.Persistence.UnitOfWork;
 public class UnitOfWork(IServiceProvider serviceProvider) : IUnitOfWork
 {
-    private readonly ConcurrentDictionary<string, DbContext> _dbContextCache = new ConcurrentDictionary<string, DbContext>();
+    private readonly DbContext _writeDbContext = serviceProvider.GetService<WriteDbContext>();
+    private readonly DbContext _readDbContext = (DbContext)serviceProvider.GetService<ReadDbContext>()
+        ?? serviceProvider.GetService<WriteDbContext>();
 
-    public IWriteRepository<T> GetWriteRepository<T>() where T : class
+    public IWriteRepository<T> GetWriteRepository<T>() where T : BaseEntity
     {
-        var writeDbContext = (WriteDbContext)_dbContextCache.GetOrAdd(nameof(WriteDbContext), type =>
-        {
-            return serviceProvider.GetRequiredService<WriteDbContext>();
-        });
-
-        return new WriteRepository<T>(writeDbContext);
+        return new WriteRepository<T>(_writeDbContext);
     }
 
-    public IReadRepository<T> GetReadRepository<T>() where T : class
+    public IReadRepository<T> GetReadRepository<T>() where T : BaseEntity
     {
-        var readDbContext = (ReadDbContext)_dbContextCache.GetOrAdd(nameof(ReadDbContext), type =>
-        {
-            return serviceProvider.GetRequiredService<ReadDbContext>();
-        });
+        return new ReadRepository<T>(_readDbContext);
+    }
 
-        return new ReadRepository<T>(readDbContext);
+    public Task SaveChangesAsync(CancellationToken cancellationToken)
+    {
+        return _writeDbContext.SaveChangesAsync(cancellationToken);
     }
 }

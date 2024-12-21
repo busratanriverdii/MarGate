@@ -1,26 +1,24 @@
-﻿using MarGate.Core.CQRS.Query;
+﻿using MarGate.Catalog.Domain.Entities;
+using MarGate.Core.CQRS.Query;
+using MarGate.Core.Persistence.Repository;
+using MarGate.Core.Persistence.UnitOfWork;
 
 namespace MarGate.Catalog.Application.Handlers.Categories.Queries.GetCategoryById;
 
-public class GetCategoryByIdQueryHandler : QueryHandler<GetCategoryByIdQueryRequest, GetCategoryByIdQueryResponse>
+public class GetCategoryByIdQueryHandler(IUnitOfWork unitOfWork) : QueryHandler<GetCategoryByIdQueryRequest, GetCategoryByIdQueryResponse>
 {
-    private readonly ICategoryReadRepository _categoryReadRepository;
+    private readonly IReadRepository<Category> _categoryReadRepository = unitOfWork.GetReadRepository<Category>();
 
-    public GetCategoryByIdQueryHandler(ICategoryReadRepository categoryReadRepository)
-    {
-        _categoryReadRepository = categoryReadRepository;
-    }
-
-    public override Task<GetCategoryByIdQueryResponse> Handle(GetCategoryByIdQueryRequest request, 
+    public async override Task<GetCategoryByIdQueryResponse> Handle(GetCategoryByIdQueryRequest request,
         CancellationToken cancellationToken)
     {
-        var category = await _categoryReadRepository.GetByIdAsync(request.Id);
+        var category = await _categoryReadRepository.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+
         return new GetCategoryByIdQueryResponse()
         {
             Id = category.Id,
-            Name = category.Name
-
-            // set description?
+            Name = category.Name,
+            Description = category.Description
         };
     }
 }

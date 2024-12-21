@@ -2,6 +2,6 @@
 
 namespace MarGate.Payment.Application.Handlers.Payment.Queries.GetAllPayments;
 
-public class GetAllPaymentsQueryRequest : Query<GetAllPaymentsQueryResponse>
+public class GetAllPaymentsQueryRequest : Query<List<GetAllPaymentsQueryResponse>>
 {
 }

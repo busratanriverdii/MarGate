@@ -4,7 +4,7 @@ namespace MarGate.Basket.Domain.Entities;
 
 public class BasketItem : BaseEntity
 {
-    public long CatalogId { get; protected set; }
+    public long ProductId { get; protected set; }
     public Basket Basket { get; protected set; }
     public long BasketId { get; protected set; }
     public int Quantity { get; protected set; }
@@ -12,16 +12,16 @@ public class BasketItem : BaseEntity
     public decimal TotalPrice => Quantity * UnitPrice;
 
     //basketitem uyarıyor
-    public BasketItem(long catalogId, int quantity, decimal unitPrice)
+    public BasketItem(long productId, int quantity, decimal unitPrice)
     {
-        if (catalogId <= 0)
-            throw new ArgumentException($"CatalogId must be greater than zero. Attempted to set: {catalogId}.");
+        if (productId <= 0)
+            throw new ArgumentException($"CatalogId must be greater than zero. Attempted to set: {productId}.");
         if (quantity <= 0)
             throw new ArgumentException($"Quantity must be greater than zero. Attempted to set: {quantity}.");
         if (unitPrice <= 0)
             throw new ArgumentException($"Unit price must be greater than zero. Attempted to set: {unitPrice:C}.");
 
-        CatalogId = catalogId;
+        ProductId = productId;
         Quantity = quantity;
         UnitPrice = unitPrice;
     }

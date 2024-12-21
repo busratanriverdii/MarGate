@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Core\API\MarGate.Core.Api\MarGate.Core.Api.csproj" />
     <ProjectReference Include="..\..\..\..\Core\CQRS\MarGate.Core.CQRS\MarGate.Core.CQRS.csproj" />
+    <ProjectReference Include="..\..\..\..\Core\Jwt\MarGate.Core.Jwt\MarGate.Core.Jwt.csproj" />
     <ProjectReference Include="..\..\Core\MarGate.Catalog.Application\MarGate.Catalog.Application.csproj" />
   </ItemGroup>
 

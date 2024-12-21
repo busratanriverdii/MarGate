@@ -1,34 +1,28 @@
 ﻿using MarGate.Catalog.Application.Handlers.Products.Commands.CreateCatalog;
+using MarGate.Catalog.Domain.Entities;
 using MarGate.Core.CQRS.Command;
+using MarGate.Core.Persistence.Repository;
+using MarGate.Core.Persistence.UnitOfWork;
 
 namespace MarGate.Catalog.Application.Handlers.Products.Commands.CreateProduct;
 
-public class CreateProductCommandHandler : CommandHandler<CreateProductCommandRequest, CreateProductCommandResponse>
+public class CreateProductCommandHandler(IUnitOfWork unitOfWork) : CommandHandler<CreateProductCommandRequest, CreateProductCommandResponse>
 {
-    private readonly IProductWriteRepository _productWriteRepository;
+    private readonly IWriteRepository<Product> _productWriteRepository = unitOfWork.GetWriteRepository<Product>();
 
-    public CreateProductCommandHandler(IProductWriteRepository productWriteRepository)
-    {
-        _productWriteRepository = productWriteRepository;
-    }
-
-    public override Task<CreateProductCommandResponse> Handle(CreateProductCommandRequest request, 
+    public async override Task<CreateProductCommandResponse> Handle(CreateProductCommandRequest request,
         CancellationToken cancellationToken)
     {
-        var product = new Product()
-        {
-            Name = request.Name,
-            Price = request.Price,
-            UnitsInStock = request.UnitsInStock,
-            CategoryId = request.CategoryId
-        };
+        var product = new Product(request.Name, request.UnitsInStock, request.Price, request.CategoryId);
 
-        var isSuccess = await _productWriteRepository.CreateAsync(product);
-        await _productWriteRepository.SaveAsync();
+        var id = _productWriteRepository.Create(product);
+
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return new CreateProductCommandResponse()
         {
-            IsSuccess = isSuccess
+            IsSuccess = true,
+            ProductId = id
         };
     }
 }

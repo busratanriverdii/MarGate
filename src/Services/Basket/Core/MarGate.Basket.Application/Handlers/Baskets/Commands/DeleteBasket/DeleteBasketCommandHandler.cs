@@ -1,24 +1,22 @@
 ﻿using MarGate.Core.CQRS.Command;
+using MarGate.Core.Persistence.Repository;
+using MarGate.Core.Persistence.UnitOfWork;
 
 namespace MarGate.Basket.Application.Handlers.Basket.Commands.DeleteBasket;
 
-public class DeleteBasketCommandHandler : CommandHandler<DeleteBasketCommandRequest, DeleteBasketCommandResponse>
+public class DeleteBasketCommandHandler(IUnitOfWork unitOfWork) : CommandHandler<DeleteBasketCommandRequest, DeleteBasketCommandResponse>
 {
-    private readonly IBasketWriteRepository _basketWriteRepository;
+    private readonly IWriteRepository<Domain.Entities.Basket> _basketWriteRepository = unitOfWork.GetWriteRepository<Domain.Entities.Basket>();
 
-    public DeleteBasketCommandHandler(IBasketWriteRepository basketWriteRepository)
-    {
-        _basketWriteRepository = basketWriteRepository;
-    }
-
-    public override Task<DeleteBasketCommandResponse> Handle(DeleteBasketCommandRequest request, 
+    public async override Task<DeleteBasketCommandResponse> Handle(DeleteBasketCommandRequest request,
         CancellationToken cancellationToken)
     {
-        var basket = await _basketWriteRepository.FindAsync(request.Id);
-        basket.IsDeleted = true;
+        var basket = await _basketWriteRepository.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+        basket.MarkAsDeleted();
 
         var isSuccess = _basketWriteRepository.Update(basket);
-        await _basketWriteRepository.SaveAsync();
+
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return new DeleteBasketCommandResponse()
         {

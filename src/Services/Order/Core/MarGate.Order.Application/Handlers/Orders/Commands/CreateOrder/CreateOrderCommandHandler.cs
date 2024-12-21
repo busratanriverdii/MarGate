@@ -1,67 +1,56 @@
 ﻿using MarGate.Core.CQRS.Command;
+using MarGate.Core.Persistence.Repository;
+using MarGate.Core.Persistence.UnitOfWork;
+using MarGate.Order.Application.Messaging.OrderCreated;
+using MarGate.Order.Application.RemoteCall;
+using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MarGate.Order.Application.Handlers.Order.Commands.CreateOrder;
 
 public class CreateOrderCommandHandler : CommandHandler<CreateOrderCommandRequest, CreateOrderCommandResponse>
 {
+    private readonly IWriteRepository<Domain.Entities.Order> _orderWriteRepository;
+    private readonly IPublishEndpoint _publishEndpoint;
+    private readonly IIdentityRemoteCall _identityRemoteCall;
+    private readonly IUnitOfWork _unitOfWork;
 
-    private readonly IServiceProvider _serviceProvider; 
-
-    public CreateOrderCommandHandler(IServiceProvider serviceProvider)
+    public CreateOrderCommandHandler(IUnitOfWork unitOfWork, IPublishEndpoint publishEndpoint, IIdentityRemoteCall identityRemoteCall)
     {
-        _serviceProvider = serviceProvider;
+        _orderWriteRepository = unitOfWork.GetWriteRepository<Domain.Entities.Order>();
+        _publishEndpoint = publishEndpoint;
+        _identityRemoteCall = identityRemoteCall;
+        _unitOfWork = unitOfWork;
     }
 
-    public override Task<CreateOrderCommandResponse> Handle(CreateOrderCommandRequest request, 
+    public async override Task<CreateOrderCommandResponse> Handle(CreateOrderCommandRequest request,
         CancellationToken cancellationToken)
     {
-        var orderWriteRepository = _serviceProvider.GetService<IOrderWriteRepository>();
-        var basketItemWriteRepository = _serviceProvider.GetService<IBasketItemWriteRepository>();
-        var orderItemWriteRepository = _serviceProvider.GetService<IOrderItemWriteRepository>();
-        var userReadRepository = _serviceProvider.GetService<IUserReadRepository>();
-        var capPublisher = _serviceProvider.GetService<ICapPublisher>();
+        var user = _identityRemoteCall.GetUserById(request.UserId);
 
-        var user = await userReadRepository.SingleGetAsync(x => x.Id == request.UserId);
+        var order = new Domain.Entities.Order(user.Id, request.Address, request.Description);
 
-        var order = new Order()
+        foreach (var item in request.Items)
         {
-            Description = request.Description,
-            Address = request.Address,
-            UserId = user.Id
-        };
-
-        var isSuccess = await orderWriteRepository.CreateAsync(order);
-        await orderWriteRepository.SaveAsync();
-
-        var basketItems =
-            await basketItemWriteRepository.Table.Where(x => x.BasketId == user.Basket.Id)
-                .ToListAsync(cancellationToken: cancellationToken);
-
-        foreach (var basketItem in basketItems)
-        {
-            var orderItem = new OrderItem
-            {
-                OrderId = order.Id,
-                ProductId = basketItem.ProductId
-            };
-
-            await orderItemWriteRepository.CreateAsync(orderItem);
-
-            basketItem.IsDeleted = true;
+            order.OrderItems.Add(new Domain.Entities.OrderItem(
+                item.ProductId,
+                item.Quantity,
+                item.UnitPrice));
         }
 
-        await basketItemWriteRepository.SaveAsync();
-        await orderItemWriteRepository.SaveAsync();
 
-        await capPublisher.PublishAsync("order.created", new OrderCreatedEvent()
+        var orderId = _orderWriteRepository.Create(order);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+        await _publishEndpoint.Publish(new OrderCreatedMessage
         {
-            OrderId = order.Id
-        }, cancellationToken: cancellationToken);
+            OrderId = orderId
+        }, cancellationToken);
 
         return new CreateOrderCommandResponse()
         {
-            IsSuccess = isSuccess
+            IsSuccess = true
         };
     }
 }

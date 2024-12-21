@@ -22,11 +22,7 @@ public class BasketItemConfiguration : IEntityTypeConfiguration<BasketItem>
 
         builder.Property(bi => bi.IsDeleted).IsRequired();
 
-        builder.HasOne<Product>(bi => bi.Product)
-               .WithMany(p => p.BasketItems)
-               .HasForeignKey(bi => bi.ProductId);
-
-        builder.HasOne<Basket>(bi => bi.Basket)
+        builder.HasOne(bi => bi.Basket)
                .WithMany(b => b.BasketItems)
                .HasForeignKey(bi => bi.BasketId);
 

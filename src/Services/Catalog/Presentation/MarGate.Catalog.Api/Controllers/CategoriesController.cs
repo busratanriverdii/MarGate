@@ -1,4 +1,5 @@
-﻿using MarGate.Catalog.Application.Handlers.Categories.Commands.CreateCategory;
+﻿using MarGate.Catalog.Api.Requests.Category;
+using MarGate.Catalog.Application.Handlers.Categories.Commands.CreateCategory;
 using MarGate.Catalog.Application.Handlers.Categories.Commands.DeleteCategory;
 using MarGate.Catalog.Application.Handlers.Categories.Commands.UpdateCategory;
 using MarGate.Catalog.Application.Handlers.Categories.Queries.GetAllCategories;

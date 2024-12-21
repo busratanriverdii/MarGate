@@ -4,5 +4,5 @@ namespace MarGate.Campaign.Application.Handlers.Campaigns.Commands.DeleteCampaig
 
 public class DeleteCampaignCommandRequest : Command<DeleteCampaignCommandResponse>
 {
-    public long Id { get; set; }
+    public string Id { get; set; }
 }

@@ -1,36 +1,38 @@
 ﻿using MarGate.Core.CQRS.Command;
+using MarGate.Core.Persistence.Repository;
+using MarGate.Core.Persistence.UnitOfWork;
+using MarGate.Identity.Application.Handlers.Identity.Commands.UpdateUser;
+using MarGate.Identity.Domain.Entities;
 
 namespace MarGate.Identity.Application.Handlers.Identity.Commands.CreateUser;
 
-public class CreateUserCommandHandler : CommandHandler<CreateUserCommandRequest, CreateUserCommandResponse>
+public class CreateUserCommandHandler(IUnitOfWork unitOfWork) : CommandHandler<CreateUserCommandRequest, CreateUserCommandResponse>
 {
-    private readonly IUserWriteRepository _userWriteRepository;
+    private readonly IWriteRepository<User> _userWriteRepository = unitOfWork.GetWriteRepository<User>();
 
-    public CreateUserCommandHandler(IUserWriteRepository userWriteRepository)
-    {
-        _userWriteRepository = userWriteRepository;
-    }
-
-    public override Task<CreateUserCommandResponse> Handle(CreateUserCommandRequest request, 
+    public async override Task<CreateUserCommandResponse> Handle(CreateUserCommandRequest request,
         CancellationToken cancellationToken)
     {
-        var user = new User()
-        {
-            FirstName = request.FirstName,
-            LastName = request.LastName,
-            BirthDate = request.BirthDate,
-            PhoneNumber = request.PhoneNumber,
-            Address = request.Address,
-            EmailAddress = request.EmailAddress,
-            PasswordText = request.PasswordText
-        };
+        var user = new User(
+        request.FirstName,
+        request.LastName,
+        request.PhoneNumber != null ? new PhoneNumber(request.PhoneNumber) : null,
+        new Address(request.AddressStreet, request.AddressCity, request.AddressCountry),
+        new EmailAddress(request.EmailAddress),
+        request.BirthDate,
+        request.PasswordText,
+        0m
+    );
 
-        var isSuccess = await _userWriteRepository.CreateAsync(user);
-        await _userWriteRepository.SaveAsync();
+        var id = _userWriteRepository.Create(user);
+
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return new CreateUserCommandResponse()
         {
-            IsSuccess = isSuccess
+            IsSuccess = true,
+            UserId = id
         };
+
     }
 }

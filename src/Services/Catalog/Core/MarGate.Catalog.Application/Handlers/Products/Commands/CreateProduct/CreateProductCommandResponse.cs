@@ -3,6 +3,6 @@
 public class CreateProductCommandResponse
 {
     public bool IsSuccess { get; set; }
+    public long ProductId { get; set; }
 
-    // id dönmeli miyiz?
 }
