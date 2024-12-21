@@ -1,31 +1,26 @@
 ﻿using MarGate.Core.CQRS.Command;
+using MarGate.Core.Persistence.Repository;
+using MarGate.Core.Persistence.UnitOfWork;
 
 namespace MarGate.Basket.Application.Handlers.Basket.Commands.CreateBasket;
 
-
-public class CreateBasketCommandHandler(IBasketWriteRepository basketWriteRepository) : CommandHandler<CreateBasketCommandRequest, CreateBasketCommandResponse>
+public class CreateBasketCommandHandler(IUnitOfWork unitOfWork) : CommandHandler<CreateBasketCommandRequest, CreateBasketCommandResponse>
 {
-    private readonly IBasketWriteRepository _basketWriteRepository = basketWriteRepository;
-
-    public CreateBasketCommandHandler(IBasketWriteRepository basketWriteRepository)
-    {
-        _basketWriteRepository = basketWriteRepository;
-    }
+    private readonly IWriteRepository<Domain.Entities.Basket> _basketWriteRepository = unitOfWork.GetWriteRepository<Domain.Entities.Basket>();
 
     public override async Task<CreateBasketCommandResponse> Handle(CreateBasketCommandRequest request, 
         CancellationToken cancellationToken)
     {
-        var basket = new Basket()
-        {
-            UserId = request.UserId
-        };
+        var basket = new Domain.Entities.Basket(request.UserId);
 
-        var isSuccess = await _basketWriteRepository.CreateAsync(basket);
-        await _basketWriteRepository.SaveAsync();
+        var id = _basketWriteRepository.Create(basket);
+
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return new CreateBasketCommandResponse()
         {
-            IsSuccess = isSuccess
+            IsSuccess = true,
+            BasketId = id
         };
     }
 }

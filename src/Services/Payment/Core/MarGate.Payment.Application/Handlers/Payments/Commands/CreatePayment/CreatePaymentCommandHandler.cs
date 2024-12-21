@@ -1,27 +1,30 @@
 ﻿using MarGate.Core.CQRS.Command;
+using MarGate.Core.Persistence.Repository;
+using MarGate.Core.Persistence.UnitOfWork;
 
 namespace MarGate.Payment.Application.Handlers.Payment.Commands.CreatePayment;
 
-public class CreatePaymentCommandHandler : CommandHandler<CreatePaymentCommandRequest, CreatePaymentCommandResponse>
+public class CreatePaymentCommandHandler(IUnitOfWork unitOfWork) : CommandHandler<CreatePaymentCommandRequest, CreatePaymentCommandResponse>
 {
-    private readonly IPaymentWriteRepository _paymentWriteRepository;
+    private readonly IWriteRepository<Domain.Entities.Payment> _paymentWriteRepository = unitOfWork.GetWriteRepository<Domain.Entities.Payment>();
 
-    public CreatePaymentCommandHandler(IPaymentWriteRepository paymentWriteRepository)
-    {
-        _paymentWriteRepository = paymentWriteRepository;
-    }
-
-    public override Task<CreatePaymentCommandResponse> Handle(CreatePaymentCommandRequest request,
+    public async override Task<CreatePaymentCommandResponse> Handle(CreatePaymentCommandRequest request,
         CancellationToken cancellationToken)
     {
-        var payment = new Payment(request.Amount, request.PaymentMethod, request.Status, request.TransactionId);
+        var payment = new Domain.Entities.Payment(
+            request.Amount, 
+            request.PaymentMethodType, 
+            request.Status, 
+            request.TransactionId);
 
-        var isSuccess = await _paymentWriteRepository.CreateAsync(payment);
-        await _paymentWriteRepository.SaveAsync();
+        var id = _paymentWriteRepository.Create(payment);
+
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return new CreatePaymentCommandResponse
         {
-            IsSuccess = isSuccess
+            IsSuccess = true,
+            PaymentId = id,
         };
     }
 }

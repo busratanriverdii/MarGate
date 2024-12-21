@@ -1,6 +1,7 @@
 ﻿using MarGate.Core.Api.Controllers;
 using MarGate.Core.Api.Responses.Results;
 using MarGate.Core.CQRS.Processor;
+using MarGate.Order.Api.Requests;
 using MarGate.Order.Application.Handlers.Order.Commands.CreateOrder;
 using MarGate.Order.Application.Handlers.Order.Commands.DeleteOrder;
 using MarGate.Order.Application.Handlers.Order.Commands.UpdateOrder;
@@ -58,7 +59,13 @@ public class OrdersController(ICQRSProcessor cqrsProcessor) : BaseController
         {
             Description = request.Description,
             Address = request.Address,
-            UserId = request.UserId
+            UserId = request.UserId,
+            Items = request.Items.Select(x => new CreateOrderCommandRequestItem
+            {
+                ProductId = x.ProductId,
+                Quantity = x.Quantity,
+                UnitPrice = x.UnitPrice,
+            }).ToList(),
         }, cancellationToken);
 
         return new Result<CreateOrderCommandResponse>(ResultStatus.Success, response);

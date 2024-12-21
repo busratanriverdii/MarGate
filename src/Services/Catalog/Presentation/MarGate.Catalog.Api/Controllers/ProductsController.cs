@@ -1,4 +1,5 @@
-﻿using MarGate.Catalog.Application.Handlers.Products.Commands.CreateCatalog;
+﻿using MarGate.Catalog.Api.Requests.Product;
+using MarGate.Catalog.Application.Handlers.Products.Commands.CreateCatalog;
 using MarGate.Catalog.Application.Handlers.Products.Commands.DeleteCatalog;
 using MarGate.Catalog.Application.Handlers.Products.Commands.UpdateCatalog;
 using MarGate.Catalog.Application.Handlers.Products.Queries.GetAllCatalogs;

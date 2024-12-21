@@ -44,6 +44,13 @@ public class Category : BaseEntity
         Name = newName;
     }
 
+    public void ChangeCategoryDescription(string newDescription)
+    {
+        GuardAgainstInvalidCategoryDescription(newDescription);
+
+        Description = newDescription;
+    }
+
 
     private void GuardAgainstInvalidArguments(string name, string description)
     {
@@ -64,5 +71,11 @@ public class Category : BaseEntity
     {
         if (string.IsNullOrWhiteSpace(newName))
             throw new ArgumentException($"New category name cannot be null or empty. Provided value: '{newName}'", nameof(newName));
+    }
+
+    private void GuardAgainstInvalidCategoryDescription(string newDescription)
+    {
+        if (string.IsNullOrWhiteSpace(newDescription))
+            throw new ArgumentException($"New category description cannot be null or empty. Provided value: '{newDescription}'", nameof(newDescription));
     }
 }

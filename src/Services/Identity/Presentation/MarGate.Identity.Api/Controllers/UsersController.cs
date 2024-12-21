@@ -1,6 +1,8 @@
 ﻿using MarGate.Core.Api.Controllers;
 using MarGate.Core.Api.Responses.Results;
 using MarGate.Core.CQRS.Processor;
+using MarGate.Identity.Api.Request;
+using MarGate.Identity.Application.Handlers.Identities.Commands.LoginUser;
 using MarGate.Identity.Application.Handlers.Identity.Commands.CreateUser;
 using MarGate.Identity.Application.Handlers.Identity.Commands.DeleteUser;
 using MarGate.Identity.Application.Handlers.Identity.Commands.UpdateUser;
@@ -15,6 +17,27 @@ namespace ECommerceSample.WebAPI.Controllers;
 public class UsersController(ICQRSProcessor cqrsProcessor) : BaseController
 {
     private readonly ICQRSProcessor _cqrsProcessor = cqrsProcessor;
+
+    /// <summary>
+    /// Logs in a user by validating the provided credentials (email and password) and captures the user's IP address.
+    /// </summary>
+    /// <param name="loginUserRequest">The login data containing email address, password, and other necessary information for authentication.</param>
+    /// <param name="cancellationToken">The cancellation token to monitor for request cancellation during the operation.</param>
+    /// <returns>The response after successfully logging in the user, including authentication details.</returns>
+    [HttpPost("login")]
+    public async Task<Result<LoginUserCommandResponse>> LoginUser(
+        [FromBody] LoginUserRequest loginUserRequest,
+        CancellationToken cancellationToken)
+    {
+        var response = await _cqrsProcessor.ProcessAsync(new LoginUserCommandRequest
+        {
+            EmailAddress = loginUserRequest.EmailAddress,
+            PasswordText = loginUserRequest.PasswordText,
+        }, cancellationToken);
+
+        return new Result<LoginUserCommandResponse>(ResultStatus.Success, response);
+    }
+
 
     /// <summary>
     /// Get all users
@@ -58,7 +81,9 @@ public class UsersController(ICQRSProcessor cqrsProcessor) : BaseController
         {
             FirstName = request.FirstName,
             LastName = request.LastName,
-            Address = request.Address,
+            AddressCity = request.AddressCity,
+            AddressCountry = request.AddressCountry,
+            AddressStreet = request.AddressStreet,
             BirthDate = request.BirthDate,
             PhoneNumber = request.PhoneNumber,
             EmailAddress = request.EmailAddress,
@@ -86,7 +111,9 @@ public class UsersController(ICQRSProcessor cqrsProcessor) : BaseController
             Id = id,
             FirstName = request.FirstName,
             LastName = request.LastName,
-            Address = request.Address,
+            AddressCity = request.AddressCity,
+            AddressCountry = request.AddressCountry,
+            AddressStreet = request.AddressStreet,
             BirthDate = request.BirthDate,
             PhoneNumber = request.PhoneNumber,
             EmailAddress = request.EmailAddress,
@@ -127,7 +154,7 @@ public class UsersController(ICQRSProcessor cqrsProcessor) : BaseController
         var response = await _cqrsProcessor.ProcessAsync(new UpdateUserBalanceCommandRequest
         {
             Id = id,
-            Amount = request.Amount
+            Amount = request.Balance
         }, cancellationToken);
 
         return new Result<UpdateUserBalanceCommandResponse>(ResultStatus.Success, response);

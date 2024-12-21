@@ -1,30 +1,26 @@
 ﻿using MarGate.Core.CQRS.Query;
+using MarGate.Core.Mongo;
 
 namespace MarGate.Campaign.Application.Handlers.Campaigns.Queries.GetAllCampaigns;
 
-public class GetAllCampaignsQueryHandler : QueryHandler<GetAllCampaignsQueryRequest, List<GetAllCampaignsQueryResponse>>
+public class GetAllCampaignsQueryHandler(IMongoRepositoryFactory mongoRepositoryFactory) : QueryHandler<GetAllCampaignsQueryRequest, List<GetAllCampaignsQueryResponse>>
 {
-    private readonly ICampaignReadRepository _campaignReadRepository;
+    private readonly IMongoRepository<Domain.Entities.Campaign> _campaignRepository = mongoRepositoryFactory.CreateRepository<Domain.Entities.Campaign>();
 
-    public GetAllCampaignsQueryHandler(ICampaignReadRepository campaignReadRepository)
-    {
-        _campaignReadRepository = campaignReadRepository;
-    }
-
-    public override Task<List<GetAllCampaignsQueryResponse>> Handle(GetAllCampaignsQueryRequest request, 
+    public async override Task<List<GetAllCampaignsQueryResponse>> Handle(GetAllCampaignsQueryRequest request, 
         CancellationToken cancellationToken)
     {
-        var campaigns = await _campaignReadRepository.GetAll().ToListAsync(cancellationToken);
+        var campaigns = await _campaignRepository.GetListAsync(cancellationToken: cancellationToken);
 
-        return campaigns.Select(campaign => new GetAllCampaignsQueryResponse
+        return campaigns.Select(c => new GetAllCampaignsQueryResponse
         {
-            Id = campaign.Id,
-            Name = campaign.Name,
-            Description = campaign.Description,
-            DiscountPercentage = campaign.Discount.Percentage,
-            StartDate = campaign.StartDate,
-            EndDate = campaign.EndDate,
-            IsActive = campaign.IsActive
+            Id = c.Id,
+            Name = c.Name,
+            Description = c.Description,
+            DiscountPercentage = c.DiscountRate,
+            StartDate = c.StartDate,
+            EndDate = c.EndDate,
+            IsActive = c.IsActive
         }).ToList();
     }
 }

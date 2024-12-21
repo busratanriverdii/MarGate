@@ -4,5 +4,5 @@ namespace MarGate.Campaign.Application.Handlers.Campaigns.Queries.GetCampaignByI
 
 public class GetCampaignByIdQueryRequest : Query<GetCampaignByIdQueryResponse>
 {
-    public long Id { get; set; }
+    public string Id { get; set; }
 }

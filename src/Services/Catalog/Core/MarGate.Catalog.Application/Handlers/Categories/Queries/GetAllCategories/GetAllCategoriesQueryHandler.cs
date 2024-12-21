@@ -1,27 +1,25 @@
-﻿using MarGate.Core.CQRS.Query;
+﻿using MarGate.Catalog.Domain.Entities;
+using MarGate.Core.CQRS.Query;
+using MarGate.Core.Persistence.Repository;
+using MarGate.Core.Persistence.UnitOfWork;
 
 namespace MarGate.Catalog.Application.Handlers.Categories.Queries.GetAllCategories;
 
-public class GetAllCategoriesQueryHandler : QueryHandler<GetAllCategoriesQueryRequest, List<GetAllCategoriesQueryResponse>>
+public class GetAllCategoriesQueryHandler(IUnitOfWork unitOfWork) : QueryHandler<GetAllCategoriesQueryRequest, List<GetAllCategoriesQueryResponse>>
 {
-    private readonly ICategoryReadRepository _categoryReadRepository;
+    private readonly IReadRepository<Category> _categoryReadRepository = unitOfWork.GetReadRepository<Category>();
 
-    public GetAllCategoriesQueryHandler(ICategoryReadRepository categoryReadRepository)
-    {
-        _categoryReadRepository = categoryReadRepository;
-    }
-
-    public override Task<List<GetAllCategoriesQueryResponse>> Handle(GetAllCategoriesQueryRequest request, 
+    public async override Task<List<GetAllCategoriesQueryResponse>> Handle(
+        GetAllCategoriesQueryRequest request,
         CancellationToken cancellationToken)
     {
-        var categories = await _categoryReadRepository.GetAll().ToListAsync(cancellationToken: cancellationToken);
+        var categories = await _categoryReadRepository.GetListAsync(cancellationToken: cancellationToken);
 
         return categories.Select(c => new GetAllCategoriesQueryResponse()
         {
             Id = c.Id,
-            Name = c.Name
-
-            // description ?
+            Name = c.Name,
+            Description = c.Description
         }).ToList();
     }
 }

@@ -1,28 +1,30 @@
-﻿using MarGate.Core.CQRS.Query;
-using MarGate.Identity.Application.Handlers.Identity.Queries.GetAllUsers;
+﻿using Elastic.CommonSchema;
+using MarGate.Core.CQRS.Query;
+using MarGate.Core.Persistence.Repository;
+using MarGate.Core.Persistence.UnitOfWork;
+using MarGate.Identity.Domain.Entities;
 
 namespace MarGate.Identity.Application.Handlers.Identity.Queries.GetUserById;
 
-public class GetUserByIdQueryHandler : QueryHandler<GetUserByIdQueryRequest, GetUserByIdQueryResponse>
+public class GetUserByIdQueryHandler(IUnitOfWork unitOfWork) : QueryHandler<GetUserByIdQueryRequest, GetUserByIdQueryResponse>
 {
-    private readonly IUserReadRepository _userReadRepository;
+    private readonly IReadRepository<Domain.Entities.User> _userReadRepository = unitOfWork.GetReadRepository<Domain.Entities.User>();
 
-    public GetAllUsersQueryHandler(IUserReadRepository userReadRepository)
-    {
-        _userReadRepository = userReadRepository;
-    }
-
-    public override Task<GetUserByIdQueryResponse> Handle(GetUserByIdQueryRequest request, 
+    public async override Task<GetUserByIdQueryResponse> Handle(GetUserByIdQueryRequest request, 
         CancellationToken cancellationToken)
     {
-        var users = await _userReadRepository.GetAll().ToListAsync(cancellationToken: cancellationToken);
+        var user = await _userReadRepository.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
-        return users.Select(c => new GetAllUsersQueryResponse()
+        return new GetUserByIdQueryResponse()
         {
-            Id = c.Id,
-            FirstName = c.FirstName,
-            LastName = c.LastName
-            // sadece bunlar mı dönülmeli getallusersda değiştirirsem burada da değiştirmeliyim eklemeliyim
-        }).ToList();
+            Id = user.Id,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            EmailAddress = user.EmailAddress?.Address,
+            PhoneNumber = user.PhoneNumber?.Number,
+            Address = $"{user.Address.Street}, {user.Address.City}, {user.Address.Country}",
+            Balance = user.Balance,
+            BirthDate = user.BirthDate
+        };
     }
 }

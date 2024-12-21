@@ -1,20 +1,18 @@
-﻿using MarGate.Core.CQRS.Query;
+﻿using MarGate.Catalog.Domain.Entities;
+using MarGate.Core.CQRS.Query;
+using MarGate.Core.Persistence.Repository;
+using MarGate.Core.Persistence.UnitOfWork;
 
 namespace MarGate.Catalog.Application.Handlers.Products.Queries.GetAllCatalogs;
 
-public class GetAllProductsQueryHandler : QueryHandler<GetAllProductsQueryRequest, List<GetAllProductsQueryResponse>>
+public class GetAllProductsQueryHandler(IUnitOfWork unitOfWork) : QueryHandler<GetAllProductsQueryRequest, List<GetAllProductsQueryResponse>>
 {
-    private readonly IProductReadRepository _productReadRepository;
+    private readonly IReadRepository<Product> _productReadRepository = unitOfWork.GetReadRepository<Product>();
 
-    public GetAllProductsQueryHandler(IProductReadRepository productReadRepository)
-    {
-        _productReadRepository = productReadRepository;
-    }
-
-    public override Task<List<GetAllProductsQueryResponse>> Handle(GetAllProductsQueryRequest request, 
+    public async override Task<List<GetAllProductsQueryResponse>> Handle(GetAllProductsQueryRequest request,
         CancellationToken cancellationToken)
     {
-        var products = await _productReadRepository.GetAll().ToListAsync(cancellationToken: cancellationToken);
+        var products = await _productReadRepository.GetListAsync(cancellationToken: cancellationToken);
 
         return products.Select(p => new GetAllProductsQueryResponse()
         {

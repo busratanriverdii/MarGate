@@ -1,26 +1,25 @@
-﻿using MarGate.Core.CQRS.Command;
+﻿using MarGate.Campaign.Application.Handlers.Campaigns.Commands.CreateCampaign;
+using MarGate.Campaign.Domain.Entities;
+using MarGate.Core.CQRS.Command;
+using MarGate.Core.Mongo;
 
 namespace MarGate.Campaign.Application.Handlers.Campaigns.Commands.DeleteCampaign;
 
-public class DeleteCampaignCommandHandler : CommandHandler<DeleteCampaignCommandRequest, DeleteCampaignCommandResponse>
+public class DeleteCampaignCommandHandler(IMongoRepositoryFactory mongoRepositoryFactory) : CommandHandler<DeleteCampaignCommandRequest, DeleteCampaignCommandResponse>
 {
-    private readonly ICampaignWriteRepository _campaignWriteRepository;
+    private readonly IMongoRepository<Domain.Entities.Campaign> _campaignRepository = mongoRepositoryFactory.CreateRepository<Domain.Entities.Campaign>();
 
-    public DeleteCampaignCommandHandler(ICampaignWriteRepository campaignWriteRepository)
-    {
-        _campaignWriteRepository = campaignWriteRepository;
-    }
-
-    public override Task<DeleteCampaignCommandResponse> Handle(DeleteCampaignCommandRequest request, 
+    public async override Task<DeleteCampaignCommandResponse> Handle(DeleteCampaignCommandRequest request, 
         CancellationToken cancellationToken)
     {
-        var isSuccess = await _campaignWriteRepository.DeleteAsync(request.CampaignId);
+        var campaign = await _campaignRepository.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
-        await _campaignWriteRepository.SaveAsync();
+        await _campaignRepository.DeleteAsync(campaign, cancellationToken);
 
         return new DeleteCampaignCommandResponse
         {
-            IsSuccess = isSuccess
+            IsSuccess = true
         };
+
     }
 }

@@ -7,39 +7,47 @@ using Microsoft.Extensions.DependencyInjection;
 namespace MarGate.Core.Persistence.Extension;
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddUnitOfWork<TWriteContext>(this IServiceCollection services, IConfiguration configuration) where TWriteContext : WriteDbContext
+    public class UnitOfWorkOptions
     {
+        public string WriteConnectionString { get; set; }
+        public string ReadConnectionString { get; set; }
+    }
+    public static IServiceCollection AddUnitOfWork<TWriteContext>(this IServiceCollection services,
+        IConfiguration configuration, Action<UnitOfWorkOptions> setupAction) where TWriteContext : WriteDbContext
+    {
+        var option = new UnitOfWorkOptions();
+        setupAction.Invoke(option);
+
         services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
-
-        services.AddScoped((_) =>
+        services.AddDbContext<TWriteContext>(x =>
         {
-            var optionsBuilder = new DbContextOptionsBuilder<WriteDbContext>();
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("WriteDb"));
-            return new WriteDbContext(optionsBuilder.Options);
-
+            x.UseSqlServer(option.WriteConnectionString);
         });
+
+        services.AddScoped<WriteDbContext, TWriteContext>();
 
         return services;
     }
 
-    public static IServiceCollection AddUnitOfWork<TWriteContext, TReadContext>(this IServiceCollection services, IConfiguration configuration) where TWriteContext : WriteDbContext where TReadContext : ReadDbContext
+    public static IServiceCollection AddUnitOfWork<TWriteContext, TReadContext>(this IServiceCollection services, IConfiguration configuration, Action<UnitOfWorkOptions> setupAction) where TWriteContext : WriteDbContext where TReadContext : ReadDbContext
     {
+        var option = new UnitOfWorkOptions();
+        setupAction.Invoke(option);
+
         services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
-        services.AddScoped((_) =>
+        services.AddDbContext<TWriteContext>(x =>
         {
-            var optionsBuilder = new DbContextOptionsBuilder<WriteDbContext>();
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("WriteDb"));
-            return new WriteDbContext(optionsBuilder.Options);
-
+            x.UseSqlServer(option.WriteConnectionString);
         });
 
-        services.AddScoped((_) =>
-        {
-            var optionsBuilder = new DbContextOptionsBuilder<ReadDbContext>();
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("ReadDb"));
-            return new ReadDbContext(optionsBuilder.Options);
+        services.AddScoped<WriteDbContext, TWriteContext>();
 
+        services.AddDbContext<TReadContext>(x =>
+        {
+            x.UseSqlServer(option.ReadConnectionString);
         });
+
+        services.AddScoped<ReadDbContext, TReadContext>();
 
         return services;
     }

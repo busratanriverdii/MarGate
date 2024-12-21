@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Core\UnitOfWork\MarGate.Core.UnitOfWork\MarGate.Core.UnitOfWork.csproj" />
+    <ProjectReference Include="..\..\Core\MarGate.Payment.Domain\MarGate.Payment.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

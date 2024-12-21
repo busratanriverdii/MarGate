@@ -1,6 +1,7 @@
 ﻿using MarGate.Core.DDD;
 
 namespace MarGate.Identity.Domain.Entities;
+
 public class User : BaseEntity
 {
     public string FirstName { get; protected set; }
@@ -12,42 +13,56 @@ public class User : BaseEntity
     public string PasswordText { get; protected set; }
     public decimal Balance { get; protected set; }
 
+    public User(
+        string firstName,
+        string lastName,
+        PhoneNumber phoneNumber,
+        Address address,
+        EmailAddress emailAddress,
+        DateTime birthDate,
+        string passwordText,
+        decimal balance)
+    {
+        GuardAgainstInvalidUserArguments(firstName, lastName, phoneNumber, address, emailAddress, passwordText);
+
+        FirstName = firstName;
+        LastName = lastName;
+        PhoneNumber = phoneNumber;
+        Address = address;
+        EmailAddress = emailAddress;
+        BirthDate = birthDate;
+        PasswordText = passwordText;
+        Balance = balance;
+    }
+
     public void SetFirstName(string firstName)
     {
-        if (string.IsNullOrWhiteSpace(firstName))
-        {
-            throw new ArgumentException($"First name cannot be empty. Attempted to set to: {firstName}.");
-        }
-
+        GuardAgainstInvalidFirstName(firstName);
         FirstName = firstName;
     }
 
     public void SetLastName(string lastName)
     {
-        if (string.IsNullOrWhiteSpace(lastName))
-        {
-            throw new ArgumentException($"Last name cannot be empty. Attempted to set to: {lastName}.");
-        }
-
+        GuardAgainstInvalidLastName(lastName);
         LastName = lastName;
     }
 
     public void SetPhoneNumber(PhoneNumber phoneNumber)
     {
-        PhoneNumber = phoneNumber ??
-            throw new ArgumentException($"Phone number cannot be null.");
+        GuardAgainstNullPhoneNumber(phoneNumber);
+        PhoneNumber = phoneNumber;
     }
 
     public void SetAddress(Address address)
     {
-        Address = address ??
-            throw new ArgumentException($"Address cannot be null.");
+        GuardAgainstNullAddress(address);
+        Address = address;
     }
 
     public void SetEmailAddress(EmailAddress emailAddress)
     {
-        EmailAddress = emailAddress ??
-            throw new ArgumentException($"Email address cannot be null.");
+        GuardAgainstNullEmailAddress(emailAddress);
+        EmailAddress = emailAddress;
     }
 
     public void SetBirthDate(DateTime birthDate)
@@ -57,11 +72,7 @@ public class User : BaseEntity
 
     public void SetPasswordText(string passwordText)
     {
-        if (string.IsNullOrWhiteSpace(passwordText) || passwordText.Length < 6)
-        {
-            throw new ArgumentException($"Password must be at least 6 characters long. Attempted to set to: {passwordText}.");
-        }
-
+        GuardAgainstInvalidPassword(passwordText);
         PasswordText = passwordText;
     }
 
@@ -74,6 +85,58 @@ public class User : BaseEntity
 
         Balance += amount;
     }
+
+    private void GuardAgainstInvalidUserArguments(
+        string firstName,
+        string lastName,
+        PhoneNumber phoneNumber,
+        Address address,
+        EmailAddress emailAddress,
+        string passwordText)
+    {
+        GuardAgainstInvalidFirstName(firstName);
+        GuardAgainstInvalidLastName(lastName);
+        GuardAgainstNullPhoneNumber(phoneNumber);
+        GuardAgainstNullAddress(address);
+        GuardAgainstNullEmailAddress(emailAddress);
+        GuardAgainstInvalidPassword(passwordText);
+    }
+
+    private void GuardAgainstInvalidFirstName(string firstName)
+    {
+        if (string.IsNullOrWhiteSpace(firstName))
+            throw new ArgumentException($"First name cannot be empty. Attempted to set to: {firstName}");
+    }
+
+    private void GuardAgainstInvalidLastName(string lastName)
+    {
+        if (string.IsNullOrWhiteSpace(lastName))
+            throw new ArgumentException($"Last name cannot be empty. Attempted to set to: {lastName}");
+    }
+
+    private void GuardAgainstNullPhoneNumber(PhoneNumber phoneNumber)
+    {
+        if (phoneNumber == null)
+            throw new ArgumentException("Phone number cannot be null.");
+    }
+
+    private void GuardAgainstNullAddress(Address address)
+    {
+        if (address == null)
+            throw new ArgumentException("Address cannot be null.");
+    }
+
+    private void GuardAgainstNullEmailAddress(EmailAddress emailAddress)
+    {
+        if (emailAddress == null)
+            throw new ArgumentException("Email address cannot be null.");
+    }
+
+    private void GuardAgainstInvalidPassword(string passwordText)
+    {
+        if (string.IsNullOrWhiteSpace(passwordText) || passwordText.Length < 6)
+            throw new ArgumentException($"Password must be at least 6 characters long. Attempted to set to: {passwordText}");
+    }
 }
 
 public class PhoneNumber
@@ -82,12 +145,16 @@ public class PhoneNumber
 
     public PhoneNumber(string number)
     {
+        GuardAgainstInvalidPhoneNumber(number);
+        Number = number;
+    }
+
+    private void GuardAgainstInvalidPhoneNumber(string number)
+    {
         if (string.IsNullOrWhiteSpace(number))
         {
             throw new ArgumentException($"Phone number cannot be empty. Attempted to set to: {number}.");
         }
-
-        Number = number;
     }
 }
 
@@ -97,12 +164,16 @@ public class EmailAddress
 
     public EmailAddress(string address)
     {
+        GuardAgainstInvalidEmailAddress(address);
+        Address = address;
+    }
+
+    private void GuardAgainstInvalidEmailAddress(string address)
+    {
         if (string.IsNullOrWhiteSpace(address) || !address.Contains('@'))
         {
             throw new ArgumentException($"Invalid email address. Attempted to set to: {address}.");
         }
-
-        Address = address;
     }
 }
 
@@ -114,13 +185,17 @@ public class Address
 
     public Address(string street, string city, string country)
     {
+        GuardAgainstInvalidAddress(street, city, country);
+        Street = street;
+        City = city;
+        Country = country;
+    }
+
+    private void GuardAgainstInvalidAddress(string street, string city, string country)
+    {
         if (string.IsNullOrWhiteSpace(street) || string.IsNullOrWhiteSpace(city) || string.IsNullOrWhiteSpace(country))
         {
             throw new ArgumentException($"Address cannot be empty. Attempted to set: {street}, {city}, {country}.");
         }
-
-        Street = street;
-        City = city;
-        Country = country;
     }
 }

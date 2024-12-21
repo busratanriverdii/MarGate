@@ -1,37 +1,29 @@
 ﻿using MarGate.Core.CQRS.Command;
+using MarGate.Core.Mongo;
 
 namespace MarGate.Campaign.Application.Handlers.Campaigns.Commands.CreateCampaign;
 
-public class CreateCampaignCommandHandler : CommandHandler<CreateCampaignCommandRequest, CreateCampaignCommandResponse>
+public class CreateCampaignCommandHandler(IMongoRepositoryFactory mongoRepositoryFactory) : CommandHandler<CreateCampaignCommandRequest, CreateCampaignCommandResponse>
 {
-    private readonly ICampaignWriteRepository _campaignWriteRepository;
+    private readonly IMongoRepository<Domain.Entities.Campaign> _campaignRepository = mongoRepositoryFactory.CreateRepository<Domain.Entities.Campaign>();
 
-    public CreateCampaignCommandHandler(ICampaignWriteRepository campaignWriteRepository)
-    {
-        _campaignWriteRepository = campaignWriteRepository;
-    }
-
-    public override Task<CreateCampaignCommandResponse> Handle(CreateCampaignCommandRequest request, 
+    public async override Task<CreateCampaignCommandResponse> Handle(CreateCampaignCommandRequest request,
         CancellationToken cancellationToken)
     {
-        var discount = new Discount(request.DiscountPercentage);
-        var campaign = new Campaign(
+        var campaign = new Domain.Entities.Campaign(
             request.Name,
             request.Description,
-            discount,
+            request.DiscountPercentage,
             request.StartDate,
             request.EndDate,
             request.IsActive
         );
 
-        // MongoDB 
-        var isSuccess = await _campaignWriteRepository.CreateAsync(campaign);
-
-        await _campaignWriteRepository.SaveAsync();
+        await _campaignRepository.AddAsync(campaign, cancellationToken);
 
         return new CreateCampaignCommandResponse
         {
-            IsSuccess = isSuccess
+            IsSuccess = true
         };
     }
 }

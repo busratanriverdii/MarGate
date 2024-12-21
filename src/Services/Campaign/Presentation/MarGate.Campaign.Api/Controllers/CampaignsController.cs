@@ -1,4 +1,5 @@
 ﻿using MarGate.Basket.Application.Handlers.Basket.Commands.UpdateBasket;
+using MarGate.Campaign.Api.Requests.Campaign;
 using MarGate.Campaign.Application.Handlers.Campaigns.Commands.CreateCampaign;
 using MarGate.Campaign.Application.Handlers.Campaigns.Commands.DeleteCampaign;
 using MarGate.Campaign.Application.Handlers.Campaigns.Queries.GetAllCampaigns;
@@ -25,7 +26,8 @@ public class CampaignsController(ICQRSProcessor cqrsProcessor) : BaseController
     public async Task<Result<List<GetAllCampaignsQueryResponse>>> GetAllCampaigns(CancellationToken cancellationToken)
     {
         var response = await _cqrsProcessor.ProcessAsync(new GetAllCampaignsQueryRequest(), cancellationToken);
-        return new Result<List<GetAllCampaignsQueryResponse>>(ResultStatus.Success, response);
+
+        return ApiResponse(response);
     }
 
     /// <summary>
@@ -36,11 +38,11 @@ public class CampaignsController(ICQRSProcessor cqrsProcessor) : BaseController
     /// <returns>The campaign matching the given ID</returns>
     [HttpGet("{id}")]
     public async Task<Result<GetCampaignByIdQueryResponse>> GetCampaignById(
-        [FromRoute] long id,
+        [FromRoute] string id,
         CancellationToken cancellationToken)
     {
         var response = await _cqrsProcessor.ProcessAsync(new GetCampaignByIdQueryRequest { Id = id }, cancellationToken);
-        return new Result<GetCampaignByIdQueryResponse>(ResultStatus.Success, response);
+        return ApiResponse(response);
     }
 
     /// <summary>
@@ -63,7 +65,7 @@ public class CampaignsController(ICQRSProcessor cqrsProcessor) : BaseController
             EndDate = request.EndDate,
             IsActive = request.IsActive
         }, cancellationToken);
-        return new Result<CreateCampaignCommandResponse>(ResultStatus.Success, response);
+        return ApiResponse(response);
     }
 
     /// <summary>
@@ -78,7 +80,7 @@ public class CampaignsController(ICQRSProcessor cqrsProcessor) : BaseController
         CancellationToken cancellationToken)
     {
         var response = await _cqrsProcessor.ProcessAsync(new UpdateBasketCommandRequest { Id = id }, cancellationToken);
-        return new Result<UpdateBasketCommandResponse>(ResultStatus.Success, response);
+        return ApiResponse(response);
     }
 
     /// <summary>
@@ -89,10 +91,10 @@ public class CampaignsController(ICQRSProcessor cqrsProcessor) : BaseController
     /// <returns>The response after deleting the campaign</returns>
     [HttpDelete("{id}")]
     public async Task<Result<DeleteCampaignCommandResponse>> DeleteCampaign(
-        [FromRoute] long id,
+        [FromRoute] string id,
         CancellationToken cancellationToken)
     {
         var response = await _cqrsProcessor.ProcessAsync(new DeleteCampaignCommandRequest { Id = id }, cancellationToken);
-        return new Result<DeleteCampaignCommandResponse>(ResultStatus.Success, response);
+        return ApiResponse(response);
     }
 }
