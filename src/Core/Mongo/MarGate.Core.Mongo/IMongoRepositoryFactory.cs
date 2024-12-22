@@ -5,17 +5,10 @@ public interface IMongoRepositoryFactory
     IMongoRepository<T> CreateRepository<T>() where T : MongoBaseEntity;
 }
 
-public class MongoRepositoryFactory : IMongoRepositoryFactory
+public class MongoRepositoryFactory(IMongoDbContext dbContext) : IMongoRepositoryFactory
 {
-    private readonly IMongoDbContext _dbContext;
-
-    public MongoRepositoryFactory(IMongoDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
-
     public IMongoRepository<T> CreateRepository<T>() where T : MongoBaseEntity
     {
-        return new MongoRepository<T>(_dbContext);
+        return new MongoRepository<T>(dbContext);
     }
 }

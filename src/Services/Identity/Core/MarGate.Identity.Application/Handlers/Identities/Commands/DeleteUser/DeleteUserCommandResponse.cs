@@ -1,7 +1,6 @@
-﻿namespace MarGate.Identity.Application.Handlers.Identity.Commands.DeleteUser
+﻿namespace MarGate.Identity.Application.Handlers.Identity.Commands.DeleteUser;
+
+public class DeleteUserCommandResponse
 {
-    public class DeleteUserCommandResponse
-    {
-        public bool IsSuccess { get; set; }
-    }
+    public bool IsSuccess { get; set; }
 }
