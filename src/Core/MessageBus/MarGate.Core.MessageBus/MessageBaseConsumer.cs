@@ -3,15 +3,8 @@ using Microsoft.Extensions.Logging;
 
 namespace MarGate.Core.MessageBus;
 
-public abstract class MessageBaseConsumer<TMessage> : IMessageConsumer<TMessage> where TMessage : class, IMessage
+public abstract class MessageBaseConsumer<TMessage>(ILogger logger) : IMessageConsumer<TMessage> where TMessage : class, IMessage
 {
-    private readonly ILogger _logger;
-
-    protected MessageBaseConsumer(ILogger logger)
-    {
-        this._logger = logger;
-    }
-
     public Task Consume(ConsumeContext<TMessage> context)
     {
         try
@@ -20,7 +13,7 @@ public abstract class MessageBaseConsumer<TMessage> : IMessageConsumer<TMessage>
         }
         catch (Exception)
         {
-            _logger.LogError($"Message : {nameof(context.Message)} is failed.");
+            logger.LogError($"Message : {nameof(context.Message)} is failed.");
             throw;
         }
     }

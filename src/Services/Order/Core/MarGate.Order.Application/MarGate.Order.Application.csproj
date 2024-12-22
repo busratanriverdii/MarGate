@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\MarGate.Core.MessageBus\MarGate.Core.MessageBus.csproj" />
     <ProjectReference Include="..\..\..\..\Core\CQRS\MarGate.Core.CQRS\MarGate.Core.CQRS.csproj" />
+    <ProjectReference Include="..\..\..\..\Core\MessageBus\MarGate.Core.MessageBus\MarGate.Core.MessageBus.csproj" />
     <ProjectReference Include="..\..\..\..\Core\UnitOfWork\MarGate.Core.UnitOfWork\MarGate.Core.UnitOfWork.csproj" />
     <ProjectReference Include="..\MarGate.Order.Domain\MarGate.Order.Domain.csproj" />
   </ItemGroup>

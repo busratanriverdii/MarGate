@@ -25,7 +25,6 @@ public class Result<T> : IResult<T>
     public string? Message { get; }
     public ResultStatus ResultStatus { get; }
 
-    // bunları ekledim yorumun ne?
     public static Result<T> Success(T data)
     {
         return new Result<T>(ResultStatus.Success, data);

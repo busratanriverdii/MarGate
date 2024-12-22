@@ -1,8 +1,6 @@
-﻿using Elastic.CommonSchema;
-using MarGate.Core.CQRS.Query;
+﻿using MarGate.Core.CQRS.Query;
 using MarGate.Core.Persistence.Repository;
 using MarGate.Core.Persistence.UnitOfWork;
-using MarGate.Identity.Domain.Entities;
 
 namespace MarGate.Identity.Application.Handlers.Identity.Queries.GetUserById;
 

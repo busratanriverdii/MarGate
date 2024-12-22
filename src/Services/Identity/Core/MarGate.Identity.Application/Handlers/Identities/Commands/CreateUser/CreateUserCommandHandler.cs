@@ -1,7 +1,6 @@
 ﻿using MarGate.Core.CQRS.Command;
 using MarGate.Core.Persistence.Repository;
 using MarGate.Core.Persistence.UnitOfWork;
-using MarGate.Identity.Application.Handlers.Identity.Commands.UpdateUser;
 using MarGate.Identity.Domain.Entities;
 
 namespace MarGate.Identity.Application.Handlers.Identity.Commands.CreateUser;
