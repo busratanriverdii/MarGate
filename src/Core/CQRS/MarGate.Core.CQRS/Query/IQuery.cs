@@ -1,8 +1,7 @@
 ﻿using MediatR;
 
-namespace MarGate.Core.CQRS.Query
+namespace MarGate.Core.CQRS.Query;
+
+public interface IQuery<out TResult> : IRequest<TResult> where TResult : class
 {
-    public interface IQuery<out TResult> : IRequest<TResult> where TResult : class
-    {
-    }
 }
