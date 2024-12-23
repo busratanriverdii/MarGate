@@ -1,5 +1,4 @@
-﻿using MarGate.Order.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace MarGate.Order.Persistence.Configurations;
