@@ -11,7 +11,6 @@ public class BasketItem : BaseEntity
     public decimal UnitPrice { get; protected set; }
     public decimal TotalPrice => Quantity * UnitPrice;
 
-    //basketitem uyarıyor
     public BasketItem(long productId, int quantity, decimal unitPrice)
     {
         if (productId <= 0)

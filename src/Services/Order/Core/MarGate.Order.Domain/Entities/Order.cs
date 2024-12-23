@@ -36,7 +36,7 @@ public class Order : BaseEntity
             throw new ArgumentNullException(nameof(orderItem), "$Order item cannot be null.");
 
         OrderItems.Add(orderItem);
-        MarkAsModified(); // mark as modified
+        MarkAsModified(); 
     }
 
     public decimal CalculateTotalAmount()

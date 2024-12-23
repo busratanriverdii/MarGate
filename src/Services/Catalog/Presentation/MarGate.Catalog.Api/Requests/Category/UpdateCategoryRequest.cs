@@ -1,8 +1,7 @@
-﻿namespace MarGate.Catalog.Api.Requests.Category
+﻿namespace MarGate.Catalog.Api.Requests.Category;
+
+public class UpdateCategoryRequest
 {
-    public class UpdateCategoryRequest
-    {
-        public string Name { get; set; }
-        public string Description { get; set; }
-    }
+    public string Name { get; set; }
+    public string Description { get; set; }
 }
