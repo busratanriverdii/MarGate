@@ -1,22 +1,16 @@
 ﻿using MarGate.Core.MessageBus;
 using MassTransit;
-using Microsoft.Extensions.Logging;
+using Serilog;
 
-namespace MarGate.Order.Application.Messaging.OrderCreated
+namespace MarGate.Order.Application.Messaging.OrderCreated;
+
+public class OrderCreatedMessageHandler(ILogger logger) : MessageBaseConsumer<OrderCreatedMessage>(logger)
 {
-    public class OrderCreatedMessageHandler : MessageBaseConsumer<OrderCreatedMessage>
+    private readonly ILogger _logger = logger;
+
+    public override Task ConsumeAsync(ConsumeContext<OrderCreatedMessage> context)
     {
-        private readonly ILogger _logger;
-
-        public OrderCreatedMessageHandler(ILogger logger) : base(logger)
-        {
-            _logger = logger;
-        }
-
-        public override Task ConsumeAsync(ConsumeContext<OrderCreatedMessage> context)
-        {
-            _logger.LogInformation("created order:" + context.Message.OrderId);
-            return Task.CompletedTask;
-        }
+        _logger.Information("created order:" + context.Message.OrderId); 
+        return Task.CompletedTask;
     }
 }

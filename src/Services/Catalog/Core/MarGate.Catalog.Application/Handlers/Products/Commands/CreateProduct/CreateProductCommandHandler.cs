@@ -1,8 +1,8 @@
 ﻿using MarGate.Catalog.Application.Handlers.Products.Commands.CreateCatalog;
 using MarGate.Catalog.Domain.Entities;
 using MarGate.Core.CQRS.Command;
-using MarGate.Core.Persistence.Repository;
-using MarGate.Core.Persistence.UnitOfWork;
+using MarGate.Core.UnitOfWork.Repository;
+using MarGate.Core.UnitOfWork.UnitOfWork;
 
 namespace MarGate.Catalog.Application.Handlers.Products.Commands.CreateProduct;
 
@@ -15,14 +15,14 @@ public class CreateProductCommandHandler(IUnitOfWork unitOfWork) : CommandHandle
     {
         var product = new Product(request.Name, request.UnitsInStock, request.Price, request.CategoryId);
 
-        var id = _productWriteRepository.Create(product);
+        _productWriteRepository.Create(product);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return new CreateProductCommandResponse()
         {
             IsSuccess = true,
-            ProductId = id
+            ProductId = product.Id
         };
     }
 }

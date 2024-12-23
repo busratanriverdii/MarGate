@@ -5,6 +5,7 @@ namespace MarGate.Payment.Domain.Entities;
 public class Payment : BaseEntity
 {
     public decimal Amount { get; protected set; }
+    public long UserId { get; set; }
     public DateTime PaymentDate { get; protected set; }
     public PaymentStatus Status { get; protected set; }
     public string TransactionId { get; protected set; }

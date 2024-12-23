@@ -1,7 +1,7 @@
 ﻿using MarGate.Core.CQRS.Query;
-using MarGate.Core.Persistence.Repository;
-using MarGate.Core.Persistence.UnitOfWork;
 using MarGate.Identity.Domain.Entities;
+using MarGate.Core.UnitOfWork.Repository;
+using MarGate.Core.UnitOfWork.UnitOfWork;
 
 namespace MarGate.Identity.Application.Handlers.Identity.Queries.GetAllUsers;
 
@@ -19,11 +19,11 @@ public class GetAllUsersQueryHandler(IUnitOfWork unitOfWork) : QueryHandler<GetA
             Id = c.Id,
             FirstName = c.FirstName,
             LastName = c.LastName,
-            EmailAddress = c.EmailAddress?.Address,
-            PhoneNumber = c.PhoneNumber?.Number,
+            EmailAddress = c.EmailAddress,
+            PhoneNumber = c.PhoneNumber,
             Balance = c.Balance,
             BirthDate = c.BirthDate,
-            Address = $"{c.Address.Street}, {c.Address.City}, {c.Address.Country}"
+            Address = c.Address
         }).ToList();
     }
 }

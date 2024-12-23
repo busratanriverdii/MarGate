@@ -14,7 +14,7 @@ public class Order : BaseEntity
     {
         if (string.IsNullOrWhiteSpace(description)) throw new ArgumentException("$Description cannot be empty");
 
-        UserId = UserId;
+        UserId = userId;
         Address = address;
         Description = description;
         OrderItems = [];
@@ -36,7 +36,7 @@ public class Order : BaseEntity
             throw new ArgumentNullException(nameof(orderItem), "$Order item cannot be null.");
 
         OrderItems.Add(orderItem);
-        MarkAsModified(); // mark as modified
+        MarkAsModified(); 
     }
 
     public decimal CalculateTotalAmount()

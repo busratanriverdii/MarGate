@@ -1,6 +1,6 @@
 ﻿using MarGate.Core.CQRS.Command;
-using MarGate.Core.Persistence.Repository;
-using MarGate.Core.Persistence.UnitOfWork;
+using MarGate.Core.UnitOfWork.Repository;
+using MarGate.Core.UnitOfWork.UnitOfWork;
 
 namespace MarGate.Payment.Application.Handlers.Payment.Commands.CreatePayment;
 
@@ -17,14 +17,14 @@ public class CreatePaymentCommandHandler(IUnitOfWork unitOfWork) : CommandHandle
             request.Status, 
             request.TransactionId);
 
-        var id = _paymentWriteRepository.Create(payment);
+        _paymentWriteRepository.Create(payment);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return new CreatePaymentCommandResponse
         {
             IsSuccess = true,
-            PaymentId = id,
+            PaymentId = payment.Id,
         };
     }
 }
