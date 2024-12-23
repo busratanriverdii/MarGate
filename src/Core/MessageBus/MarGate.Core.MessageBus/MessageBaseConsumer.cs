@@ -1,5 +1,5 @@
 ﻿using MassTransit;
-using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace MarGate.Core.MessageBus;
 
@@ -13,7 +13,7 @@ public abstract class MessageBaseConsumer<TMessage>(ILogger logger) : IMessageCo
         }
         catch (Exception)
         {
-            logger.LogError($"Message : {nameof(context.Message)} is failed.");
+            logger.Error($"Message : {nameof(context.Message)} is failed.");
             throw;
         }
     }

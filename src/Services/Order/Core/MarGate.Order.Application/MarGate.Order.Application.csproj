@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Core\API\MarGate.Core.Api\MarGate.Core.Api.csproj" />
     <ProjectReference Include="..\..\..\..\Core\CQRS\MarGate.Core.CQRS\MarGate.Core.CQRS.csproj" />
     <ProjectReference Include="..\..\..\..\Core\MessageBus\MarGate.Core.MessageBus\MarGate.Core.MessageBus.csproj" />
     <ProjectReference Include="..\..\..\..\Core\UnitOfWork\MarGate.Core.UnitOfWork\MarGate.Core.UnitOfWork.csproj" />

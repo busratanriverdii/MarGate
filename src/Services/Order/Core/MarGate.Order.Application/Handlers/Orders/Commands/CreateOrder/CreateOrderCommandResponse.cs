@@ -3,5 +3,4 @@
 public class CreateOrderCommandResponse
 {
     public bool IsSuccess { get; set; }
-    // Id dönmeye gerek var mı ekleyebiliriz
 }

@@ -1,6 +1,6 @@
 ﻿using MarGate.Core.MessageBus;
 using MassTransit;
-using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace MarGate.Order.Application.Messaging.OrderCreated;
 
@@ -10,7 +10,7 @@ public class OrderCreatedMessageHandler(ILogger logger) : MessageBaseConsumer<Or
 
     public override Task ConsumeAsync(ConsumeContext<OrderCreatedMessage> context)
     {
-        _logger.LogInformation("created order:" + context.Message.OrderId); //infoyu da base e koyalım
+        _logger.Information("created order:" + context.Message.OrderId); 
         return Task.CompletedTask;
     }
 }

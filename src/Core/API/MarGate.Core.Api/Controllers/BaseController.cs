@@ -16,8 +16,8 @@ public class BaseController : ControllerBase
 public class ApiResponse
 {
     public int StatusCode { get; set; }
-    public object? Data { get; set; }
-    public string? Message { get; set; }
+    public object Data { get; set; }
+    public string Message { get; set; }
     public bool Success { get; set; }
 }
 

@@ -1,5 +1,5 @@
 ﻿namespace MarGate.Core.Common.Exception;
 
-public class BusinessException(string code, string message) : BaseException(code, message)
+public class BusinessException(string message, string code) : BaseException(message, code)
 {
 }

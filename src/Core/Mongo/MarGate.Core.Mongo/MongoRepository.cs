@@ -34,6 +34,11 @@ public class MongoRepository<T> : IMongoRepository<T> where T : MongoBaseEntity
 
     public Task<List<T>> GetListAsync(Expression<Func<T, bool>> expression = null, CancellationToken cancellationToken = default)
     {
+        if(expression == null)
+        {
+            return collection.AsQueryable().ToListAsync(cancellationToken);
+        }
+
         return collection.AsQueryable().Where(expression).ToListAsync(cancellationToken);
     }
 

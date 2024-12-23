@@ -1,7 +1,7 @@
 ﻿using MarGate.Core.CQRS.Command;
-using MarGate.Core.Persistence.Repository;
-using MarGate.Core.Persistence.UnitOfWork;
 using MarGate.Identity.Domain.Entities;
+using MarGate.Core.UnitOfWork.Repository;
+using MarGate.Core.UnitOfWork.UnitOfWork;
 
 namespace MarGate.Identity.Application.Handlers.Identity.Commands.DeleteUser;
 
