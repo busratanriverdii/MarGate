@@ -1,7 +1,7 @@
 ﻿using MarGate.Core.DDD;
-using MarGate.Core.Persistence.Repository;
+using MarGate.Core.UnitOfWork.Repository;
 
-namespace MarGate.Core.Persistence.UnitOfWork;
+namespace MarGate.Core.UnitOfWork.UnitOfWork;
 public interface IUnitOfWork
 {
     public IWriteRepository<T> GetWriteRepository<T>() where T : BaseEntity;

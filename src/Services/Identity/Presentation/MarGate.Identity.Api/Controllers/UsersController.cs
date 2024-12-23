@@ -8,6 +8,7 @@ using MarGate.Identity.Application.Handlers.Identity.Commands.DeleteUser;
 using MarGate.Identity.Application.Handlers.Identity.Commands.UpdateUser;
 using MarGate.Identity.Application.Handlers.Identity.Queries.GetAllUsers;
 using MarGate.Identity.Application.Handlers.Identity.Queries.GetUserById;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceSample.WebAPI.Controllers;
@@ -67,6 +68,22 @@ public class UsersController(ICQRSProcessor cqrsProcessor) : BaseController
     }
 
     /// <summary>
+    /// Get authenticated user info.
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    [HttpGet("authenticated")]
+    [Authorize]
+    public async Task<Result<GetUserByIdQueryResponse>> GetAuthenticatedUserInfo(
+    CancellationToken cancellationToken)
+    {
+        var id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == "userId").Value);
+        var response = await _cqrsProcessor.ProcessAsync(new GetUserByIdQueryRequest { Id = id }, cancellationToken);
+
+        return new Result<GetUserByIdQueryResponse>(ResultStatus.Success, response);
+    }
+
+    /// <summary>
     /// Create a new user
     /// </summary>
     /// <param name="request">The details of the user to be created</param>
@@ -81,9 +98,7 @@ public class UsersController(ICQRSProcessor cqrsProcessor) : BaseController
         {
             FirstName = request.FirstName,
             LastName = request.LastName,
-            AddressCity = request.AddressCity,
-            AddressCountry = request.AddressCountry,
-            AddressStreet = request.AddressStreet,
+            Address = request.Address,
             BirthDate = request.BirthDate,
             PhoneNumber = request.PhoneNumber,
             EmailAddress = request.EmailAddress,
@@ -111,9 +126,7 @@ public class UsersController(ICQRSProcessor cqrsProcessor) : BaseController
             Id = id,
             FirstName = request.FirstName,
             LastName = request.LastName,
-            AddressCity = request.AddressCity,
-            AddressCountry = request.AddressCountry,
-            AddressStreet = request.AddressStreet,
+            Address = request.Address,
             BirthDate = request.BirthDate,
             PhoneNumber = request.PhoneNumber,
             EmailAddress = request.EmailAddress,

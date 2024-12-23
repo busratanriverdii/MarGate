@@ -1,7 +1,7 @@
 ﻿using MarGate.Catalog.Domain.Entities;
 using MarGate.Core.CQRS.Command;
-using MarGate.Core.Persistence.Repository;
-using MarGate.Core.Persistence.UnitOfWork;
+using MarGate.Core.UnitOfWork.Repository;
+using MarGate.Core.UnitOfWork.UnitOfWork;
 
 namespace MarGate.Catalog.Application.Handlers.Categories.Commands.CreateCategory;
 
@@ -14,14 +14,14 @@ public class CreateCategoryCommandHandler(IUnitOfWork unitOfWork) : CommandHandl
     {
         var category = new Category(request.Name, request.Description);
 
-        var id = _categoryWriteRepository.Create(category);
+        _categoryWriteRepository.Create(category);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return new CreateCategoryCommandResponse()
         {
             IsSuccess = true,
-            Id = id
+            Id = category.Id
         };
     }
 }

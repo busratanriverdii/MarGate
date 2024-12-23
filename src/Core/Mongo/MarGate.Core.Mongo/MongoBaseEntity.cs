@@ -1,11 +1,12 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace MarGate.Core.Mongo;
 
 public class MongoBaseEntity
 {
     [BsonId]
-    public string Id { get; set; }
+    public string Id { get; set; } = ObjectId.GenerateNewId().ToString();
     public DateTime CreatedDate { get; } = DateTime.Now;
 
     private DateTime _modifiedDate;

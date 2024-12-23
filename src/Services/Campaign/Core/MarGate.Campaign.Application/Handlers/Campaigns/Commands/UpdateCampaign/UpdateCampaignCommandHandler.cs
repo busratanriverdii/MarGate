@@ -15,6 +15,7 @@ public class UpdateCampaignCommandHandler(IMongoRepositoryFactory mongoRepositor
         campaign.SetDescription(request.Description);
         campaign.SetDiscountRate(request.DiscountPercentage);
         campaign.SetCampaignIntervalDate(request.StartDate, request.EndDate);
+        campaign.MarkAsModified();
 
         await _campaignRepository.UpdateAsync(campaign, cancellationToken);
 

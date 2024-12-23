@@ -1,10 +1,10 @@
 ﻿using MarGate.Core.DDD;
-using MarGate.Core.Persistence.Context;
-using MarGate.Core.Persistence.Repository;
+using MarGate.Core.UnitOfWork.Context;
+using MarGate.Core.UnitOfWork.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace MarGate.Core.Persistence.UnitOfWork;
+namespace MarGate.Core.UnitOfWork.UnitOfWork;
 public class UnitOfWork(IServiceProvider serviceProvider) : IUnitOfWork
 {
     private readonly DbContext _writeDbContext = serviceProvider.GetService<WriteDbContext>();

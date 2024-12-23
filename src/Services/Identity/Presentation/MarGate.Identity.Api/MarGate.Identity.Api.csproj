@@ -14,7 +14,9 @@
     <ProjectReference Include="..\..\..\..\Core\API\MarGate.Core.Api\MarGate.Core.Api.csproj" />
     <ProjectReference Include="..\..\..\..\Core\CQRS\MarGate.Core.CQRS\MarGate.Core.CQRS.csproj" />
     <ProjectReference Include="..\..\..\..\Core\Jwt\MarGate.Core.Jwt\MarGate.Core.Jwt.csproj" />
+    <ProjectReference Include="..\..\..\..\Core\UnitOfWork\MarGate.Core.UnitOfWork\MarGate.Core.UnitOfWork.csproj" />
     <ProjectReference Include="..\..\Core\MarGate.Identity.Application\MarGate.Identity.Application.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\MarGate.Identity.Persistence\MarGate.Identity.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

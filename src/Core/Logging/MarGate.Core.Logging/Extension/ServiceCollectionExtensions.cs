@@ -10,12 +10,18 @@ namespace MarGate.Core.Logging.Extension;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddLog(this IServiceCollection services, ILoggingBuilder loggingBuilder, LoggingOptions options)
+    public static IServiceCollection AddLog(this IServiceCollection services, ILoggingBuilder loggingBuilder, LoggingOptions options = null)
     {
+        options ??= new LoggingOptions();
+
         loggingBuilder.ClearProviders();
 
         Log.Logger = ConfigureLoggerConfiguration(options.LogTargetSettings)
             .CreateLogger();
+
+        services.AddSingleton(Log.Logger);
+
+        services.AddLogging();
 
         return services;
     }
@@ -30,8 +36,7 @@ public static class ServiceCollectionExtensions
                 WriteToConsole(loggerConfiguration, consoleLogSettings);
                 break;
 
-            case FileLogSettings fileSettings when !string.IsNullOrEmpty(fileSettings.FilePath): //exception fırlatabiliriz file path is required or not found
-                WriteToFile(loggerConfiguration, fileSettings);
+            case FileLogSettings fileSettings when !string.IsNullOrEmpty(fileSettings.FilePath):
                 break;
 
             case ElasticsearchLogSettings elasticSearchSettings when !string.IsNullOrEmpty(elasticSearchSettings.ElasticsearchUrl):
@@ -40,7 +45,7 @@ public static class ServiceCollectionExtensions
             default:
                 throw new InvalidOperationException($"{logTargetSettings.GetType().Name}");
         }
-        
+
         return loggerConfiguration;
     }
 
@@ -65,7 +70,7 @@ public static class ServiceCollectionExtensions
         loggerConfiguration.WriteTo.Elasticsearch([new Uri(elasticSearchSettings.ElasticsearchUrl)], configureOptions: x =>
         {
             x.DataStream = new Elastic.Ingest.Elasticsearch.DataStreams.DataStreamName(elasticSearchSettings.IndexName);
-            x.BootstrapMethod = Elastic.Ingest.Elasticsearch.BootstrapMethod.Failure; // failure yerine başka 
+            x.BootstrapMethod = Elastic.Ingest.Elasticsearch.BootstrapMethod.Failure; 
         },
         restrictedToMinimumLevel: elasticSearchSettings.LogLevel, configureTransport: x =>
         {

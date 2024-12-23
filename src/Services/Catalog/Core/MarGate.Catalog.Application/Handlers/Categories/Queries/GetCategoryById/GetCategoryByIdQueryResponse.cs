@@ -4,7 +4,5 @@ public class GetCategoryByIdQueryResponse
 {
     public long Id { get; set; }
     public string Name { get; set; }
-
     public string Description { get; set; }
-    // descriptionı da dönmek gerekmez mi ?
 }

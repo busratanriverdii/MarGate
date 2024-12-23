@@ -1,6 +1,4 @@
-﻿using MarGate.Order.Application.Handlers.Order.Commands.CreateOrder;
-
-namespace MarGate.Order.Api.Requests
+﻿namespace MarGate.Order.Api.Requests
 {
     public class CreateOrderRequest
     {

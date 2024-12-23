@@ -1,4 +1,5 @@
 ﻿using MarGate.Core.Api.Responses.Results;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
 namespace MarGate.Core.Api.Middleware;
@@ -19,10 +20,8 @@ public class ExceptionMiddleware(RequestDelegate next)
         }
     }
 
-    // static yapmak mantıklı mı
     private static Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
-        // burada benim loglamadan yararlansak olur mu?
         Console.Error.WriteLine(exception);
 
         var result = new Result<string>(ResultStatus.Error, "An unexpected error occurred.");

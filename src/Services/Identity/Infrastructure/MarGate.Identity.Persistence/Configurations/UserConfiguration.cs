@@ -1,5 +1,4 @@
-﻿using MarGate.Identity.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace MarGate.Identity.Persistence.Configurations;

@@ -14,7 +14,7 @@ public class Order : BaseEntity
     {
         if (string.IsNullOrWhiteSpace(description)) throw new ArgumentException("$Description cannot be empty");
 
-        UserId = UserId;
+        UserId = userId;
         Address = address;
         Description = description;
         OrderItems = [];

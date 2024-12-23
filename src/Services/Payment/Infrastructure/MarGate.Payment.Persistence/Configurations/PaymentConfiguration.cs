@@ -13,6 +13,9 @@ public class PaymentConfiguration : IEntityTypeConfiguration<Domain.Entities.Pay
         builder.Property(p => p.Amount)
             .IsRequired();
 
+        builder.Property(p => p.UserId)
+            .IsRequired();
+
         builder.Property(p => p.PaymentDate)
             .IsRequired()
             .HasDefaultValueSql("GETDATE()");

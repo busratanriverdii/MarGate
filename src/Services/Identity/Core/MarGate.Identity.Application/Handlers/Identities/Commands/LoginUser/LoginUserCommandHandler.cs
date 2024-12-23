@@ -1,9 +1,10 @@
 ﻿using MarGate.Core.Common.Exception;
 using MarGate.Core.CQRS.Command;
-using MarGate.Core.Persistence.Repository;
-using MarGate.Core.Persistence.UnitOfWork;
 using MarGate.Identity.Application.Authentication;
 using MarGate.Identity.Domain.Entities;
+using MarGate.Core.UnitOfWork.Repository;
+using MarGate.Core.UnitOfWork.UnitOfWork;
+using MarGate.Identity.Application.Extensions;
 
 namespace MarGate.Identity.Application.Handlers.Identities.Commands.LoginUser;
 
@@ -14,19 +15,8 @@ public class LoginUserCommandHandler(IUnitOfWork unitOfWork, ITokenGenerator tok
     public async override Task<LoginUserCommandResponse> Handle(LoginUserCommandRequest request, CancellationToken cancellationToken)
     {
         var user = await _userWriteRepository
-            .FirstOrDefaultAsync(x => x.EmailAddress.ToString() == request.EmailAddress, cancellationToken)
-            ?? throw new BusinessException("User not registered", "001"); //tostring dedim Emailadress bir class oldugu için
-
-
-        if (!user.PasswordText.Equals(request.PasswordText))
-        {
-            throw new BusinessException("Invalid password", "002");
-        }
-
-        var user = await _userWriteRepository.GetQuery()
-            .Where(u => u.Emails.Any(a => a.IsActiveEmailAddress && a.EmailAddress == request.EmailAddress)
-                        && u.Passwords.Any(v => v.IsActivePassword && v.PasswordText == request.PasswordText.Md5Encryption()
-            .FirstOrDefaultAsync(cancellationToken); 
+            .FirstOrDefaultAsync(x => x.EmailAddress.ToString() == request.EmailAddress && x.PasswordText == request.PasswordText.Md5Encryption(), cancellationToken)
+            ?? throw new BusinessException("User not registered", "001");
 
         var token = tokenGenerator.GenerateAccessToken(user.Id);
 
@@ -34,7 +24,7 @@ public class LoginUserCommandHandler(IUnitOfWork unitOfWork, ITokenGenerator tok
         {
             IsSuccess = true,
             UserId = user.Id,
-            Token = token // response da dönmeli...
+            Token = token
         };
     }
 }
