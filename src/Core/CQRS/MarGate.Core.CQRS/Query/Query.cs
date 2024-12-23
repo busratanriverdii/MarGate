@@ -1,6 +1,5 @@
-﻿namespace MarGate.Core.CQRS.Query
+﻿namespace MarGate.Core.CQRS.Query;
+
+public class Query<TResult> : IQuery<TResult> where TResult : class
 {
-    public class Query<TResult> : IQuery<TResult> where TResult : class
-    {
-    }
 }
