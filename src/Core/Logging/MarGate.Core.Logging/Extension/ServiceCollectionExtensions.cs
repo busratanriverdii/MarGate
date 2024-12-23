@@ -30,7 +30,7 @@ public static class ServiceCollectionExtensions
                 WriteToConsole(loggerConfiguration, consoleLogSettings);
                 break;
 
-            case FileLogSettings fileSettings when !string.IsNullOrEmpty(fileSettings.FilePath):
+            case FileLogSettings fileSettings when !string.IsNullOrEmpty(fileSettings.FilePath): //exception fırlatabiliriz file path is required or not found
                 WriteToFile(loggerConfiguration, fileSettings);
                 break;
 
@@ -40,7 +40,7 @@ public static class ServiceCollectionExtensions
             default:
                 throw new InvalidOperationException($"{logTargetSettings.GetType().Name}");
         }
-
+        
         return loggerConfiguration;
     }
 
@@ -65,7 +65,7 @@ public static class ServiceCollectionExtensions
         loggerConfiguration.WriteTo.Elasticsearch([new Uri(elasticSearchSettings.ElasticsearchUrl)], configureOptions: x =>
         {
             x.DataStream = new Elastic.Ingest.Elasticsearch.DataStreams.DataStreamName(elasticSearchSettings.IndexName);
-            x.BootstrapMethod = Elastic.Ingest.Elasticsearch.BootstrapMethod.Failure;
+            x.BootstrapMethod = Elastic.Ingest.Elasticsearch.BootstrapMethod.Failure; // failure yerine başka 
         },
         restrictedToMinimumLevel: elasticSearchSettings.LogLevel, configureTransport: x =>
         {

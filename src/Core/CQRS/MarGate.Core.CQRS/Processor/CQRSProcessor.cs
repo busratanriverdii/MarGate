@@ -2,25 +2,24 @@
 using MarGate.Core.CQRS.Query;
 using MediatR;
 
-namespace MarGate.Core.CQRS.Processor
+namespace MarGate.Core.CQRS.Processor;
+
+public class CQRSProcessor : ICQRSProcessor
 {
-    public class CQRSProcessor : ICQRSProcessor
+    private readonly IMediator _mediatr;
+
+    public CQRSProcessor(IMediator mediatr)
     {
-        private readonly IMediator _mediatr;
+        _mediatr = mediatr;
+    }
 
-        public CQRSProcessor(IMediator mediatr)
-        {
-            _mediatr = mediatr;
-        }
+    public Task<TResult> ProcessAsync<TResult>(IQuery<TResult> query, CancellationToken cancellationToken) where TResult : class
+    {
+        return _mediatr.Send(query, cancellationToken);
+    }
 
-        public Task<TResult> ProcessAsync<TResult>(IQuery<TResult> query, CancellationToken cancellationToken) where TResult : class
-        {
-            return _mediatr.Send(query, cancellationToken);
-        }
-
-        public Task<TResult> ProcessAsync<TResult>(ICommand<TResult> command, CancellationToken cancellationToken) where TResult : class
-        {
-            return _mediatr.Send(command, cancellationToken);
-        }
+    public Task<TResult> ProcessAsync<TResult>(ICommand<TResult> command, CancellationToken cancellationToken) where TResult : class
+    {
+        return _mediatr.Send(command, cancellationToken);
     }
 }

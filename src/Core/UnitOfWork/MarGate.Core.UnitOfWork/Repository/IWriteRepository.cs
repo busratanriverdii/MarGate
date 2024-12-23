@@ -1,7 +1,9 @@
-﻿namespace MarGate.Core.Persistence.Repository;
-public interface IWriteRepository<T> : IBaseRepository<T> where T : class
+﻿using MarGate.Core.DDD;
+
+namespace MarGate.Core.Persistence.Repository;
+public interface IWriteRepository<T> : IBaseRepository<T> where T : BaseEntity
 {
-    Task CreateAsync(T model);  
-    void Update(T model);
-    void Delete(T model);
+    long Create(T model);
+    bool Update(T model);
+    bool Delete(T model);
 }
