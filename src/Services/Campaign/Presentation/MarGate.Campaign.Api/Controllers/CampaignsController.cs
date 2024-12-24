@@ -1,12 +1,13 @@
-﻿using MarGate.Basket.Application.Handlers.Basket.Commands.UpdateBasket;
-using MarGate.Campaign.Api.Requests.Campaign;
+﻿using MarGate.Campaign.Api.Requests.Campaign;
 using MarGate.Campaign.Application.Handlers.Campaigns.Commands.CreateCampaign;
 using MarGate.Campaign.Application.Handlers.Campaigns.Commands.DeleteCampaign;
+using MarGate.Campaign.Application.Handlers.Campaigns.Commands.UpdateCampaign;
 using MarGate.Campaign.Application.Handlers.Campaigns.Queries.GetAllCampaigns;
 using MarGate.Campaign.Application.Handlers.Campaigns.Queries.GetCampaignById;
 using MarGate.Core.Api.Controllers;
 using MarGate.Core.Api.Responses.Results;
 using MarGate.Core.CQRS.Processor;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarGate.Campaign.Api.Controllers;
@@ -75,11 +76,22 @@ public class CampaignsController(ICQRSProcessor cqrsProcessor) : BaseController
     /// <param name="cancellationToken">Cancellation token to cancel the request</param>
     /// <returns>The response after updating the basket</returns>
     [HttpPut("{id}")]
-    public async Task<Result<UpdateBasketCommandResponse>> UpdateBasket(
-        [FromRoute] long id,
+    public async Task<Result<UpdateCampaignCommandResponse>> UpdateCampaign(
+        [FromRoute] string id,
+        [FromBody] UpdateCampaignRequest request,
         CancellationToken cancellationToken)
     {
-        var response = await _cqrsProcessor.ProcessAsync(new UpdateBasketCommandRequest { Id = id }, cancellationToken);
+        var response = await _cqrsProcessor.ProcessAsync(new UpdateCampaignCommandRequest
+        {
+            Id = id,
+            Name = request.Name,
+            Description = request.Description,
+            DiscountPercentage = request.DiscountPercentage,
+            StartDate = request.StartDate,
+            EndDate = request.EndDate,
+            IsActive = request.IsActive
+        }, cancellationToken);
+
         return ApiResponse(response);
     }
 

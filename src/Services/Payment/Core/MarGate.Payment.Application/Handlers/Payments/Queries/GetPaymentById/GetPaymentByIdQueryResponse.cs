@@ -7,7 +7,7 @@ public class GetPaymentByIdQueryResponse
     public long Id { get; set; }
     public decimal Amount { get; set; }
     public DateTime PaymentDate { get; set; }
-    public PaymentStatus Status { get; set; } //string mi dönülmeli
+    public PaymentStatus Status { get; set; } 
     public string TransactionId { get; set; }
     public string PaymentMethodType { get; set; }
     public string PaymentMethodToken { get; set; }

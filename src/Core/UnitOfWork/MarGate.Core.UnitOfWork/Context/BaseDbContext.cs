@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace MarGate.Core.Persistence.Context;
-public class BaseDbContext<TContext>(DbContextOptions<TContext> options) : DbContext(options) where TContext : DbContext
+namespace MarGate.Core.UnitOfWork.Context;
+public class BaseDbContext(DbContextOptions options) : DbContext(options)
 {
 }
 

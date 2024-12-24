@@ -13,7 +13,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Core\API\MarGate.Core.Api\MarGate.Core.Api.csproj" />
     <ProjectReference Include="..\..\..\..\Core\Jwt\MarGate.Core.Jwt\MarGate.Core.Jwt.csproj" />
+    <ProjectReference Include="..\..\..\..\Core\UnitOfWork\MarGate.Core.UnitOfWork\MarGate.Core.UnitOfWork.csproj" />
     <ProjectReference Include="..\..\Core\MarGate.Basket.Application\MarGate.Basket.Application.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\MarGate.Basket.Persistence\MarGate.Basket.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

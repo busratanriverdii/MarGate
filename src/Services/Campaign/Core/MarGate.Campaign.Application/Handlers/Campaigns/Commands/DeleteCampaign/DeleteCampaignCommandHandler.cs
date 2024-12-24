@@ -1,6 +1,4 @@
-﻿using MarGate.Campaign.Application.Handlers.Campaigns.Commands.CreateCampaign;
-using MarGate.Campaign.Domain.Entities;
-using MarGate.Core.CQRS.Command;
+﻿using MarGate.Core.CQRS.Command;
 using MarGate.Core.Mongo;
 
 namespace MarGate.Campaign.Application.Handlers.Campaigns.Commands.DeleteCampaign;

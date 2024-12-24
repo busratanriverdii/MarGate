@@ -1,0 +1,33 @@
+# Use the official .NET 8 SDK image to build the application
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the solution file and the .csproj file for the MarGate.Catalog.Api project
+COPY MarGate.sln ./
+COPY src/Services/Catalog/Presentation/MarGate.Catalog.Api/MarGate.Catalog.Api.csproj ./src/Services/Catalog/Presentation/MarGate.Catalog.Api/
+
+# Restore the dependencies for the MarGate.Catalog.Api project
+RUN dotnet restore src/Services/Catalog/Presentation/MarGate.Catalog.Api/MarGate.Catalog.Api.csproj
+
+# Copy the rest of the source code into the container
+COPY . ./
+
+# Build and publish the application
+RUN dotnet publish src/Services/Catalog/Presentation/MarGate.Catalog.Api -c Release -o /app/publish
+
+# Use the official .NET 8 runtime image to run the application
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
+
+# Set the working directory in the final image
+WORKDIR /app
+
+# Copy the published application from the build image
+COPY --from=build /app/publish .
+
+# Expose the port the app will run on (adjust if needed)
+EXPOSE 8080
+
+# Set the entrypoint for the container
+ENTRYPOINT ["dotnet", "MarGate.Catalog.Api.dll"]

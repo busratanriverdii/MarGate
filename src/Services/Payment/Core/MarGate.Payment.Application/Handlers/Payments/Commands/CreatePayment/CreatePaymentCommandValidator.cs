@@ -2,7 +2,7 @@
 
 namespace MarGate.Payment.Application.Handlers.Payment.Commands.CreatePayment;
 
-public class CreatePaymentCommandValidator : AbstractValidator<CreatePaymentCommandRequest> // normal request mi
+public class CreatePaymentCommandValidator : AbstractValidator<CreatePaymentCommandRequest> 
 {
     public CreatePaymentCommandValidator()
     {

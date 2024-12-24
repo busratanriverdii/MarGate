@@ -1,6 +1,6 @@
 ﻿using MarGate.Core.CQRS.Command;
-using MarGate.Core.Persistence.Repository;
-using MarGate.Core.Persistence.UnitOfWork;
+using MarGate.Core.UnitOfWork.Repository;
+using MarGate.Core.UnitOfWork.UnitOfWork;
 
 namespace MarGate.Basket.Application.Handlers.Basket.Commands.CreateBasket;
 
@@ -13,14 +13,14 @@ public class CreateBasketCommandHandler(IUnitOfWork unitOfWork) : CommandHandler
     {
         var basket = new Domain.Entities.Basket(request.UserId);
 
-        var id = _basketWriteRepository.Create(basket);
+        _basketWriteRepository.Create(basket);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return new CreateBasketCommandResponse()
         {
             IsSuccess = true,
-            BasketId = id
+            BasketId = basket.Id
         };
     }
 }

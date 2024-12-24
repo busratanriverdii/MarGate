@@ -2,11 +2,16 @@
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace MarGate.Core.Persistence.Repository;
+namespace MarGate.Core.UnitOfWork.Repository;
 public class ReadRepository<T>(DbContext context) : IReadRepository<T> where T : BaseEntity
 {
     public Task<List<T>> GetListAsync(Expression<Func<T, bool>> expression = null, CancellationToken cancelationToken = default)
     {
+        if (expression == null)
+        {
+            return context.Set<T>().AsNoTracking().ToListAsync();
+        }
+
         return context.Set<T>().AsNoTracking().Where(expression).ToListAsync();
     }
 

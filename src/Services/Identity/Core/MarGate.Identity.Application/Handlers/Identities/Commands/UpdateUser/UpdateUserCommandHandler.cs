@@ -1,7 +1,7 @@
 ﻿using MarGate.Core.CQRS.Command;
-using MarGate.Core.Persistence.Repository;
-using MarGate.Core.Persistence.UnitOfWork;
 using MarGate.Identity.Domain.Entities;
+using MarGate.Core.UnitOfWork.Repository;
+using MarGate.Core.UnitOfWork.UnitOfWork;
 
 namespace MarGate.Identity.Application.Handlers.Identity.Commands.UpdateUser;
 
@@ -16,9 +16,9 @@ public class UpdateUserCommandHandler(IUnitOfWork unitOfWork) : CommandHandler<U
 
         user.SetFirstName(request.FirstName);
         user.SetLastName(request.LastName);
-        user.SetPhoneNumber(new PhoneNumber(request.PhoneNumber));
-        user.SetAddress(new Address(request.AddressStreet, request.AddressCity, request.AddressCountry));
-        user.SetEmailAddress(new EmailAddress(request.EmailAddress));
+        user.SetPhoneNumber(request.PhoneNumber);
+        user.SetAddress(request.Address);
+        user.SetEmailAddress(request.EmailAddress);
         user.SetBirthDate(request.BirthDate);
         user.SetPasswordText(request.PasswordText);
 

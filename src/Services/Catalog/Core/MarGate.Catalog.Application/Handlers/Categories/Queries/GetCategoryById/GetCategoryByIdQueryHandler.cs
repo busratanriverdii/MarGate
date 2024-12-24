@@ -1,7 +1,7 @@
 ﻿using MarGate.Catalog.Domain.Entities;
 using MarGate.Core.CQRS.Query;
-using MarGate.Core.Persistence.Repository;
-using MarGate.Core.Persistence.UnitOfWork;
+using MarGate.Core.UnitOfWork.Repository;
+using MarGate.Core.UnitOfWork.UnitOfWork;
 
 namespace MarGate.Catalog.Application.Handlers.Categories.Queries.GetCategoryById;
 
