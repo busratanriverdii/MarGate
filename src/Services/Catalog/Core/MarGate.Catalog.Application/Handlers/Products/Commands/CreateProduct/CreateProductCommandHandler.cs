@@ -10,19 +10,17 @@ public class CreateProductCommandHandler(IUnitOfWork unitOfWork) : CommandHandle
 {
     private readonly IWriteRepository<Product> _productWriteRepository = unitOfWork.GetWriteRepository<Product>();
 
-    public async override Task<CreateProductCommandResponse> Handle(CreateProductCommandRequest request,
+    public override Task<CreateProductCommandResponse> Handle(CreateProductCommandRequest request,
         CancellationToken cancellationToken)
     {
         var product = new Product(request.Name, request.UnitsInStock, request.Price, request.CategoryId);
 
         _productWriteRepository.Create(product);
 
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
-        return new CreateProductCommandResponse()
+        return Task.FromResult(new CreateProductCommandResponse()
         {
             IsSuccess = true,
             ProductId = product.Id
-        };
+        });
     }
 }

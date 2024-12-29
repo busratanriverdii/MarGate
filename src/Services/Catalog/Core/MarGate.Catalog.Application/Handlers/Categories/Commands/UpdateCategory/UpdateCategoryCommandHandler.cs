@@ -19,8 +19,6 @@ public class UpdateCategoryCommandHandler(IUnitOfWork unitOfWork) : CommandHandl
 
         var isSuccess = _categoryWriteRepository.Update(category);
 
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
         return new UpdateCategoryCommandResponse()
         {
             IsSuccess = isSuccess

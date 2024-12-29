@@ -32,6 +32,7 @@ namespace MarGate.Core.CQRS.Extension
 
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestLoggingPipelineBehavior<,>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestValidationPipelineBehavior<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(CommitTransactionPipelineBehavior<,>));
 
             return services;
         }

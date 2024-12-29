@@ -8,7 +8,6 @@ public class UpdateBasketCommandHandler(IUnitOfWork unitOfWork) : CommandHandler
 {
     private readonly IWriteRepository<Domain.Entities.Basket> _basketWriteRepository = unitOfWork.GetWriteRepository<Domain.Entities.Basket>();
 
-
     public async override Task<UpdateBasketCommandResponse> Handle(UpdateBasketCommandRequest request,
         CancellationToken cancellationToken)
     {
@@ -16,8 +15,6 @@ public class UpdateBasketCommandHandler(IUnitOfWork unitOfWork) : CommandHandler
         basket.MarkAsDeleted();
 
         var isSuccess = _basketWriteRepository.Update(basket);
-
-        await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return new UpdateBasketCommandResponse()
         {

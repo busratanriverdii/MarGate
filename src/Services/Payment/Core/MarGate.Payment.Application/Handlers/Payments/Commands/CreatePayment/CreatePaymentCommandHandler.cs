@@ -8,23 +8,21 @@ public class CreatePaymentCommandHandler(IUnitOfWork unitOfWork) : CommandHandle
 {
     private readonly IWriteRepository<Domain.Entities.Payment> _paymentWriteRepository = unitOfWork.GetWriteRepository<Domain.Entities.Payment>();
 
-    public async override Task<CreatePaymentCommandResponse> Handle(CreatePaymentCommandRequest request,
+    public override Task<CreatePaymentCommandResponse> Handle(CreatePaymentCommandRequest request,
         CancellationToken cancellationToken)
     {
         var payment = new Domain.Entities.Payment(
-            request.Amount, 
-            request.PaymentMethodType, 
-            request.Status, 
+            request.Amount,
+            request.PaymentMethodType,
+            request.Status,
             request.TransactionId);
 
         _paymentWriteRepository.Create(payment);
 
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
-        return new CreatePaymentCommandResponse
+        return Task.FromResult(new CreatePaymentCommandResponse
         {
             IsSuccess = true,
             PaymentId = payment.Id,
-        };
+        });
     }
 }
