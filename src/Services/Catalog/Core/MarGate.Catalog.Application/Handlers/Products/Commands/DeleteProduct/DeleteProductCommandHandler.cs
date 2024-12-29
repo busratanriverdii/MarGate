@@ -17,8 +17,6 @@ public class DeleteProductCommandHandler(IUnitOfWork unitOfWork) : CommandHandle
 
         var isSuccess = _productWriteRepository.Update(product);
 
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
         return new DeleteProductCommandResponse()
         {
             IsSuccess = isSuccess

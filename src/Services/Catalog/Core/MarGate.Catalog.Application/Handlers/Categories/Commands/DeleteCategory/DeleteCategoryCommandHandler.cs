@@ -17,8 +17,6 @@ public class DeleteCategoryCommandHandler(IUnitOfWork unitOfWork) : CommandHandl
 
         var isSuccess = _categoryWriteRepository.Update(category);
 
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
         return new DeleteCategoryCommandResponse()
         {
             IsSuccess = isSuccess

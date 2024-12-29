@@ -17,8 +17,6 @@ public class UpdatePaymentCommandHandler(IUnitOfWork unitOfWork) : CommandHandle
 
         var isSuccess = _paymentWriteRepository.Update(payment);
 
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
         return new UpdatePaymentCommandResponse()
         {
             IsSuccess = isSuccess

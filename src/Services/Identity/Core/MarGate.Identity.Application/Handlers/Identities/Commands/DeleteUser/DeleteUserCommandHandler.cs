@@ -17,8 +17,6 @@ public class DeleteUserCommandHandler(IUnitOfWork unitOfWork) : CommandHandler<D
 
         var isSuccess = _userWriteRepository.Update(user);
 
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
         return new DeleteUserCommandResponse()
         {
             IsSuccess = isSuccess
