@@ -16,5 +16,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Common\MarGate.Core.Common\MarGate.Core.Common.csproj" />
     <ProjectReference Include="..\..\Logging\MarGate.Core.Logging\MarGate.Core.Logging.csproj" />
+    <ProjectReference Include="..\..\UnitOfWork\MarGate.Core.UnitOfWork\MarGate.Core.UnitOfWork.csproj" />
   </ItemGroup>
 </Project>

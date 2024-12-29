@@ -34,8 +34,6 @@ public class CreateUserCommandHandler(IUnitOfWork unitOfWork, ITokenGenerator ge
 
         _userWriteRepository.Create(user);
 
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
         var token = generator.GenerateAccessToken(user.Id);
 
         return new CreateUserCommandResponse()

@@ -24,8 +24,6 @@ public class UpdateUserCommandHandler(IUnitOfWork unitOfWork) : CommandHandler<U
 
         var isSuccess = _userWriteRepository.Update(user);
 
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
         return new UpdateUserCommandResponse()
         {
             IsSuccess = isSuccess

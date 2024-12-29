@@ -17,8 +17,6 @@ public class UpdateUserBalanceCommandHandler(IUnitOfWork unitOfWork) : CommandHa
 
         var isSuccess = _userWriteRepository.Update(user);
 
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
         return new UpdateUserBalanceCommandResponse()
         {
             IsSuccess = isSuccess

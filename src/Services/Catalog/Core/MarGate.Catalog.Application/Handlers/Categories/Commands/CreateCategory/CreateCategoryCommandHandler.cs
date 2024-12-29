@@ -9,19 +9,17 @@ public class CreateCategoryCommandHandler(IUnitOfWork unitOfWork) : CommandHandl
 {
     private readonly IWriteRepository<Category> _categoryWriteRepository = unitOfWork.GetWriteRepository<Category>();
 
-    public async override Task<CreateCategoryCommandResponse> Handle(CreateCategoryCommandRequest request,
+    public override Task<CreateCategoryCommandResponse> Handle(CreateCategoryCommandRequest request,
         CancellationToken cancellationToken)
     {
         var category = new Category(request.Name, request.Description);
 
         _categoryWriteRepository.Create(category);
 
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
-        return new CreateCategoryCommandResponse()
+        return Task.FromResult(new CreateCategoryCommandResponse()
         {
             IsSuccess = true,
             Id = category.Id
-        };
+        });
     }
 }

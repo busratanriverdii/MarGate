@@ -17,8 +17,6 @@ public class DeleteOrderCommandHandler(IUnitOfWork unitOfWork) : CommandHandler<
 
         var isSuccess = _orderWriteRepository.Update(order);
 
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
         return new DeleteOrderCommandResponse()
         {
             IsSuccess = isSuccess
