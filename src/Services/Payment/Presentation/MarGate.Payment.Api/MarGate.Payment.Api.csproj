@@ -11,9 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Core\API\MarGate.Core.Api\MarGate.Core.Api.csproj" />
     <ProjectReference Include="..\..\..\..\Core\CQRS\MarGate.Core.CQRS\MarGate.Core.CQRS.csproj" />
     <ProjectReference Include="..\..\..\..\Core\Jwt\MarGate.Core.Jwt\MarGate.Core.Jwt.csproj" />
     <ProjectReference Include="..\..\..\..\Core\UnitOfWork\MarGate.Core.UnitOfWork\MarGate.Core.UnitOfWork.csproj" />
+    <ProjectReference Include="..\..\Core\MarGate.Payment.Application\MarGate.Payment.Application.csproj" />
     <ProjectReference Include="..\..\Infrastructure\MarGate.Payment.Persistence\MarGate.Payment.Persistence.csproj" />
   </ItemGroup>
 
