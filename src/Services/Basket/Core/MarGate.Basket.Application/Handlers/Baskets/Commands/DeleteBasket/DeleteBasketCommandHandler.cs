@@ -16,8 +16,6 @@ public class DeleteBasketCommandHandler(IUnitOfWork unitOfWork) : CommandHandler
 
         var isSuccess = _basketWriteRepository.Update(basket);
 
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
         return new DeleteBasketCommandResponse()
         {
             IsSuccess = isSuccess

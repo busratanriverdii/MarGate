@@ -8,20 +8,18 @@ public class CreateBasketCommandHandler(IUnitOfWork unitOfWork) : CommandHandler
 {
     private readonly IWriteRepository<Domain.Entities.Basket> _basketWriteRepository = unitOfWork.GetWriteRepository<Domain.Entities.Basket>();
 
-    public override async Task<CreateBasketCommandResponse> Handle(CreateBasketCommandRequest request, 
+    public override Task<CreateBasketCommandResponse> Handle(CreateBasketCommandRequest request, 
         CancellationToken cancellationToken)
     {
         var basket = new Domain.Entities.Basket(request.UserId);
 
         _basketWriteRepository.Create(basket);
 
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
-        return new CreateBasketCommandResponse()
+        return Task.FromResult(new CreateBasketCommandResponse()
         {
             IsSuccess = true,
             BasketId = basket.Id
-        };
+        });
     }
 }
 

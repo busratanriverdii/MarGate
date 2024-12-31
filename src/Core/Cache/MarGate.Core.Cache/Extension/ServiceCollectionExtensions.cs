@@ -1,6 +1,5 @@
 ﻿using MarGate.Core.Cache.Distributed;
 using MarGate.Core.Cache.Memory;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MarGate.Core.Cache.Extension

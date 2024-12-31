@@ -26,10 +26,7 @@ public class CreateOrderCommandHandler(IUnitOfWork unitOfWork, IPublishEndpoint 
                 item.UnitPrice));
         }
 
-
         _orderWriteRepository.Create(order);
-
-        await unitOfWork.SaveChangesAsync(cancellationToken);
 
         await publishEndpoint.Publish(new OrderCreatedMessage
         {
