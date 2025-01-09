@@ -1,6 +1,18 @@
 version: "3.9"
 
 services:
+  margate-gateway:
+    build:
+      context: .
+      dockerfile: DockerfileGateway
+    container_name: margate-gateway
+    ports:
+      - "6000:8080" 
+    networks:
+      - app-network
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
   margate-basket-api:
     build:
       context: .
