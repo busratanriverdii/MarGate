@@ -1,0 +1,70 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/{everything}",
+      "UpstreamPathTemplate": "/basket/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "margate-basket-api",
+          "Port": 8080
+        }
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/{everything}",
+      "UpstreamPathTemplate": "/catalog/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "margate-catalog-api",
+          "Port": 8080
+        }
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/{everything}",
+      "UpstreamPathTemplate": "/campaign/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "margate-campaign-api",
+          "Port": 8080
+        }
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/{everything}",
+      "UpstreamPathTemplate": "/identity/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "margate-identity-api",
+          "Port": 8080
+        }
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/{everything}",
+      "UpstreamPathTemplate": "/order/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "margate-order-api",
+          "Port": 8080
+        }
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/{everything}",
+      "UpstreamPathTemplate": "/payment/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "margate-payment-api",
+          "Port": 8080
+        }
+      ]
+    }
+  ]
+}
