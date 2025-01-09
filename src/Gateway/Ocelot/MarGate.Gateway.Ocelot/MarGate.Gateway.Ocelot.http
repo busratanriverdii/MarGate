@@ -1,0 +1,6 @@
+@MarGate.Gateway.Ocelot_HostAddress = http://localhost:5242
+
+GET {{MarGate.Gateway.Ocelot_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
